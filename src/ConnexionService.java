@@ -9,10 +9,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author Titi
- */
 public class ConnexionService {
     private Connection databaseConnection;
     private Statement statement;
@@ -56,13 +52,10 @@ public class ConnexionService {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             
-            // Etape 2: cr�er l'objet de connexion
             databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
             
-            // Etape 3: cr�er l'objet statement
             statement = databaseConnection.createStatement();
             
-            // Etape 4: ex�cuter des requ�tes
             System.out.println("Creation de la BDD...");
             statement.executeUpdate(createDatabase);
             System.out.println("Base de donnée crée avec succès");

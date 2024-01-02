@@ -18,6 +18,7 @@ public class SupplierController {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+
             System.out.println("1. Ajouter un fournisseur");
             System.out.println("2. Afficher la liste des fournisseurs");
             System.out.println("3. Afficher un fournisseur");

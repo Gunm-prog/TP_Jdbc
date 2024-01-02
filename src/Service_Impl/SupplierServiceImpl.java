@@ -4,14 +4,15 @@ import Dao.SupplierDAO;
 import Entity.Supplier;
 import Service.ISupplierService;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class SupplierServiceImpl implements ISupplierService {
 
     private final SupplierDAO supplierDAO;
 
-    public SupplierServiceImpl(SupplierDAO supplierDAO) {
-        this.supplierDAO = supplierDAO;
+    public SupplierServiceImpl(Connection databaseConnection) {
+        this.supplierDAO = new SupplierDAO(databaseConnection);
     }
 
     @Override

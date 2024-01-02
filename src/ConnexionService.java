@@ -13,7 +13,10 @@ import java.sql.Statement;
 public class ConnexionService {
     private Connection databaseConnection;
     private Statement statement;
-    
+
+    public Connection getDatabaseConnection() {
+        return this.databaseConnection;
+    }
     final String createDatabase = "CREATE DATABASE IF NOT EXISTS TpJDBC CHARACTER SET utf8;";
     final String useDatabase = "use TpJDBC";
     final String createTableUser = "CREATE TABLE IF NOT EXISTS Users ("
@@ -52,7 +55,7 @@ public class ConnexionService {
     public void initDatabase(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
+
             databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
             
             statement = databaseConnection.createStatement();

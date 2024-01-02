@@ -19,8 +19,10 @@ public class SupplierDAO {
     //  ajouter un fournisseur
     public void addSupplier(Supplier supplier) {
         try {
-            String query = "INSERT INTO Supplier (number, name, email, adress) VALUES (?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            String query = "INSERT INTO Suppliers (number, name, email, adress) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query))
+            {
+                preparedStatement.executeUpdate("use TpJDBC");
                 preparedStatement.setInt(1, supplier.getSupplierNb());
                 preparedStatement.setString(2, supplier.getName());
                 preparedStatement.setString(3, supplier.getEmail());
@@ -37,14 +39,14 @@ public class SupplierDAO {
     public List<Supplier> getAllSuppliers() {
         List<Supplier> suppliers = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Supplier";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            String query = "SELECT * FROM Suppliers";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate("use TpJDBC");
+                ResultSet resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
                         suppliers.add(mapResultSetToSupplier(resultSet));
                     }
-                }
-            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,8 +57,9 @@ public class SupplierDAO {
     public Supplier getSupplierById(Long id) {
         Supplier supplier = null;
         try {
-            String query = "SELECT * FROM Supplier WHERE id=?";
+            String query = "SELECT * FROM Suppliers WHERE id=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.executeUpdate("use TpJDBC");
                 preparedStatement.setLong(1, id);
 
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -74,8 +77,9 @@ public class SupplierDAO {
     //  mettre à jour un fournisseur
     public void updateSupplier(Supplier supplier) {
         try {
-            String query = "UPDATE Supplier SET number=?, name=?, email=?, adress=? WHERE id=?";
+            String query = "UPDATE Suppliers SET number=?, name=?, email=?, adress=? WHERE id=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.executeUpdate("use TpJDBC");
                 preparedStatement.setInt(1, supplier.getSupplierNb());
                 preparedStatement.setString(2, supplier.getName());
                 preparedStatement.setString(3, supplier.getEmail());
@@ -92,8 +96,9 @@ public class SupplierDAO {
     // supprimer un fournisseur
     public void deleteSupplier(Long id) {
         try {
-            String query = "DELETE FROM Supplier WHERE id=?";
+            String query = "DELETE FROM Suppliers WHERE id=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.executeUpdate("use TpJDBC");
                 preparedStatement.setLong(1, id);
 
                 preparedStatement.executeUpdate();

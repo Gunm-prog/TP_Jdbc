@@ -1,9 +1,14 @@
-package TpJDBC.src;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
+ */
 
 public class ConnexionService {
     private Connection databaseConnection;
@@ -84,3 +89,4 @@ public class ConnexionService {
         }
     }
 }
+

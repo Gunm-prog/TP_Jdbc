@@ -7,14 +7,10 @@ public class Supplier implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
-    private int nb;
-
+    private int supplierNb;
     private String name;
-
     private String email;
-
-    private String address;
+    private String adress;
 
     public Long getId() {
         return id;
@@ -24,12 +20,12 @@ public class Supplier implements Serializable {
         this.id = id;
     }
 
-    public int getNb() {
-        return nb;
+    public int getSupplierNb() {
+        return supplierNb;
     }
 
-    public void setNb(int nb) {
-        this.nb = nb;
+    public void setSupplierNb(int supplierNb) {
+        this.supplierNb = supplierNb;
     }
 
     public String getName() {
@@ -48,22 +44,11 @@ public class Supplier implements Serializable {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
+    public String getAdress() {
+        return adress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "Supplier{" +
-                "id=" + id +
-                ", nb=" + nb +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 }

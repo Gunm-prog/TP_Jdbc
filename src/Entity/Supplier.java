@@ -12,6 +12,8 @@ public class Supplier implements Serializable {
     private String email;
     private String adress;
 
+    //getter et setter
+
     public Long getId() {
         return id;
     }

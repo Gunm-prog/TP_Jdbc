@@ -6,11 +6,11 @@ import Service.ISupplierService;
 
 import java.util.List;
 
-public class SupplierService implements ISupplierService {
+public class SupplierServiceImpl implements ISupplierService {
 
     private final SupplierDAO supplierDAO;
 
-    public SupplierService(SupplierDAO supplierDAO) {
+    public SupplierServiceImpl(SupplierDAO supplierDAO) {
         this.supplierDAO = supplierDAO;
     }
 

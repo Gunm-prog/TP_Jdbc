@@ -48,13 +48,17 @@ public class ConnexionService {
         + "description VARCHAR(255) NOT NULL)";
 
     final String dropDatabase = "DROP DATABASE TpJDBC";
-    
+
+    public Connection getDatabaseConnection() throws SQLException {
+       return DriverManager.getConnection("jdbc:mysql://localhost:3306/TpJDBC?useSSL=false", "root", "");
+    }
     public void initDatabase(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             
             databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-            
+        //    databaseConnection = this.getDatabaseConnection();
+
             statement = databaseConnection.createStatement();
             
             System.out.println("Creation de la BDD...");

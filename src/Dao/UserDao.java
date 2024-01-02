@@ -19,7 +19,7 @@ public class UserDao {
     //Add User
     public void addUser(User user) {
         try {
-            String query = "INSERT INTO User (employeNumber, lastname, firstname, email, login, password) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO Users (employeNumber, lastname, firstname, email, login, password) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, user.getEmployeeNb());
                 preparedStatement.setString(2, user.getLastname());
@@ -41,7 +41,7 @@ public class UserDao {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         try {
-            String query = "SELECT * FROM User";
+            String query = "SELECT * FROM Users";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
@@ -60,7 +60,7 @@ public class UserDao {
     public User getUserById(Long id) {
         User user = null;
         try {
-            String query = "SELECT * FROM User WHERE id=?";
+            String query = "SELECT * FROM Users WHERE id=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
 
@@ -76,10 +76,30 @@ public class UserDao {
         return user;
     }
 
+    //Update a user
+    public void updateUser(User user) {
+        try {
+            String query = "UPDATE Users SET employeNumber=?, lastname=?, firstname=?, email=?, login=?, password=? WHERE id=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, user.getEmployeeNb());
+                preparedStatement.setString(2, user.getLastname());
+                preparedStatement.setString(3, user.getFirstname());
+                preparedStatement.setString(4, user.getEmail());
+                preparedStatement.setString(5, user.getLogin());
+                preparedStatement.setString(6, user.getPassword());
+                preparedStatement.setLong(7, user.getId());
+
+                preparedStatement.executeUpdate();
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     //Delete user by id
     public void deleteUser(Long id) {
         try {
-            String query = "DELETE FROM User WHERE id=?";
+            String query = "DELETE FROM Users WHERE id=?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
 

@@ -59,7 +59,4 @@ public class Client implements Serializable {
     public void setAdress(String adress) {
         this.adress = adress;
     }
-    
-    
-
 }

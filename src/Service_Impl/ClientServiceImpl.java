@@ -1,4 +1,4 @@
-package TpJDBC.src.Service_Impl;
+package Service_Impl;
 
 import TpJDBC.src.Dao.ClientDao;
 import TpJDBC.src.Entity.Client;

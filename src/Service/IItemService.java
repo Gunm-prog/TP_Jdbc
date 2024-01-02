@@ -1,4 +1,4 @@
-package TpJDBC.src.Service;
+package Service;
 
 public interface IItemService {
     

@@ -1,4 +1,4 @@
-package TpJDBC.src.Service_Impl;
+package Service_Impl;
 
 import TpJDBC.src.Service.IClientService;
         

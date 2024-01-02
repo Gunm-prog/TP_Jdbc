@@ -21,8 +21,8 @@ public class ClientDao {
     private String email;
     private String adress;
     
-    public ClientDao(Connection connection) {
-        this.databaseConnection = connection;
+    public ClientDao(Connection databaseConnection) {
+        this.databaseConnection = databaseConnection;
     }
     
     public void create(Client client){

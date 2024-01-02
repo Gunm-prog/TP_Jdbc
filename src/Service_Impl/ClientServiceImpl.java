@@ -1,4 +1,4 @@
-package Service_Impl;
+package TpJDBC.src.Service_Impl;
 
 import TpJDBC.src.Dao.ClientDao;
 import TpJDBC.src.Entity.Client;
@@ -7,9 +7,11 @@ import java.sql.Connection;
 import java.util.List;
         
 public class ClientServiceImpl implements IClientService{
-    private Connection databaseConnection;
+    private final ClientDao clientDao;
     
-    private final ClientDao clientDao = new ClientDao(databaseConnection);
+    public ClientServiceImpl(Connection databaseConnection){
+        this.clientDao = new ClientDao(databaseConnection);
+    }
 
     @Override
     public void create(Client client) {

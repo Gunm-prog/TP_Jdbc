@@ -15,7 +15,7 @@ public class ConnexionService {
     
     final String createDatabase = "CREATE DATABASE IF NOT EXISTS TpJDBC CHARACTER SET utf8;";
     final String useDatabase = "use TpJDBC";
-    final String createTableUser = "CREATE TABLE IF NOT EXISTS User ("
+    final String createTableUser = "CREATE TABLE IF NOT EXISTS Users ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
         + "employeNumber INT NOT NULL, "
         + "lastName VARCHAR(255) NOT NULL,"
@@ -24,7 +24,7 @@ public class ConnexionService {
         + "login VARCHAR(255) NOT NULL,"
         + "password VARCHAR(255) NOT NULL)";
 
-    final String createTableClient = "CREATE TABLE IF NOT EXISTS Client ("
+    final String createTableClient = "CREATE TABLE IF NOT EXISTS Clients ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
         + "number INT NOT NULL, "
         + "lastName VARCHAR(255) NOT NULL,"
@@ -32,14 +32,14 @@ public class ConnexionService {
         + "email VARCHAR(255) NOT NULL,"
         + "adress VARCHAR(255) NOT NULL)";
 
-    final String createTableSupplier = "CREATE TABLE IF NOT EXISTS Supplier ("
+    final String createTableSupplier = "CREATE TABLE IF NOT EXISTS Suppliers ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
         + "number INT NOT NULL, "
         + "name VARCHAR(255) NOT NULL,"
         + "email VARCHAR(255) NOT NULL,"
         + "adress VARCHAR(255) NOT NULL)";
 
-    final String createTableArticle = "CREATE TABLE IF NOT EXISTS Article ("
+    final String createTableArticle = "CREATE TABLE IF NOT EXISTS Articles ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
         + "number INT NOT NULL, "
         + "status VARCHAR(255) NOT NULL,"

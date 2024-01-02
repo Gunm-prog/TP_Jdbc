@@ -5,10 +5,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientDao {
-    private Connection databaseConnection;
+    private final Connection databaseConnection;
     private Statement statement;
     
     private long id;
@@ -17,6 +20,10 @@ public class ClientDao {
     private String lastName;
     private String email;
     private String adress;
+    
+    public ClientDao(Connection connection) {
+        this.databaseConnection = connection;
+    }
     
     public void create(Client client){
         final String insert = "INSERT INTO Clients"
@@ -27,101 +34,44 @@ public class ClientDao {
                 + client.getEmail() +", "
                 + client.getAdress() +", "
                 +")";
-        
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-
             statement = databaseConnection.createStatement();
-            System.out.println("Insertion de données...");
             statement.executeUpdate(insert);
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+    
+    public List<Client> readAll() {
+        List<Client> clients = new ArrayList<>();
+        try {
+            String select = "SELECT * FROM Clients";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(select);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                clients.add(mapResultSetToClient(resultSet));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return clients;
+    }
+    
+    public Client read(Long id) {
+        Client client = null;
+        try {
+            String select = "SELECT * FROM Clients WHERE id=?";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(select);
+            preparedStatement.setLong(1, id);
 
-            databaseConnection.close();
-        }catch(ClassNotFoundException | SQLException e){
-            System.out.println(e);
-        }
-    }
-    
-    public void readAll(){
-        final String select = "SELECT * FROM Clients";
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-            
-            statement = databaseConnection.createStatement();
-        
-            System.out.println("Lecture des données...");
-            ResultSet rs = statement.executeQuery(select);
-            System.out.println();
-            String idData;
-            String clientNumberData;
-            String firstNameData;
-            String lastNameData;
-            String emailData;
-            String adressData;
-            while(rs.next()){
-                idData = rs.getString("id");
-                clientNumberData = rs.getString("clientNumber");
-                firstNameData = rs.getString("firstName");
-                lastNameData = rs.getString("lastName");
-                emailData = rs.getString("email");
-                adressData = rs.getString("adress");
-                
-                System.out.println("Id : " + idData);
-                System.out.println("Numéro client : " + clientNumberData);
-                System.out.println("Prénom : " + firstNameData);
-                System.out.println("Nom : " + lastNameData);
-                System.out.println("Email : " + emailData);
-                System.out.println("Adresse : " + adressData);
-                System.out.println();
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                client = mapResultSetToClient(resultSet);
             }
-            databaseConnection.close();
-        }catch(ClassNotFoundException | SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
-    }
-    
-    public void read(long id){
-        final String select = "SELECT * FROM Clients WHERE id = " + id;
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-            
-            statement = databaseConnection.createStatement();
-        
-            System.out.println("Lecture des données...");
-            ResultSet rs = statement.executeQuery(select);
-            System.out.println();
-            String idData;
-            String clientNumberData;
-            String firstNameData;
-            String lastNameData;
-            String emailData;
-            String adressData;
-            while(rs.next()){
-                idData = rs.getString("id");
-                clientNumberData = rs.getString("clientNumber");
-                firstNameData = rs.getString("firstName");
-                lastNameData = rs.getString("lastName");
-                emailData = rs.getString("email");
-                adressData = rs.getString("adress");
-                
-                System.out.println("Id : " + idData);
-                System.out.println("Numéro client : " + clientNumberData);
-                System.out.println("Prénom : " + firstNameData);
-                System.out.println("Nom : " + lastNameData);
-                System.out.println("Email : " + emailData);
-                System.out.println("Adresse : " + adressData);
-                System.out.println();
-            }
-            databaseConnection.close();
-        }catch(ClassNotFoundException | SQLException e){
-            System.out.println(e);
-        }
-        
+        return client;
     }
     
     public void update(Client client){
@@ -133,16 +83,9 @@ public class ClientDao {
                 + " adress = " + client.getAdress()
                 + "WHERE id = " + client.getId();
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-
             statement = databaseConnection.createStatement();
-            System.out.println("Insertion de données...");
             statement.executeUpdate(update);
-
-            databaseConnection.close();
-        }catch(ClassNotFoundException | SQLException e){
+        }catch(SQLException e){
             System.out.println(e);
         }
     }
@@ -150,17 +93,21 @@ public class ClientDao {
     public void delete(long id){
         final String delete = "DELETE FROM Clients WHERE id = " + id;
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-
             statement = databaseConnection.createStatement();
-            System.out.println("Insertion de données...");
             statement.executeUpdate(delete);
-
-            databaseConnection.close();
-        }catch(ClassNotFoundException | SQLException e){
+        }catch(SQLException e){
             System.out.println(e);
         }
+    }
+    
+    private Client mapResultSetToClient(ResultSet resultSet) throws SQLException {
+        Client client = new Client();
+        client.setId(resultSet.getLong("id"));
+        client.setClientNumber(resultSet.getInt("clientNumber"));
+        client.setLastname(resultSet.getString("lastName"));
+        client.setFirstname(resultSet.getString("fistname"));
+        client.setEmail(resultSet.getString("email"));
+        client.setAdress(resultSet.getString("adress"));
+        return client;
     }
 }

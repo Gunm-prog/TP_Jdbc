@@ -148,6 +148,19 @@ public class ClientDao {
     }
     
     public void delete(long id){
-        
+        final String delete = "DELETE FROM Clients WHERE id = " + id;
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+
+            statement = databaseConnection.createStatement();
+            System.out.println("Insertion de données...");
+            statement.executeUpdate(delete);
+
+            databaseConnection.close();
+        }catch(ClassNotFoundException | SQLException e){
+            System.out.println(e);
+        }
     }
 }

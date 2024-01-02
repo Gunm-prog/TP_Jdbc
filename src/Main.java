@@ -1,6 +1,11 @@
+import Controller.ItemController;
 import Controller.UserController;
+import Dao.ItemDao;
 import Dao.UserDao;
-import Service_Impl.UserServiceImpl;
+import Service.contract.IItemService;
+import Service.impl.ItemServiceImpl;
+import Service.impl.UserServiceImpl;
+import Service.contract.IUserService;
 
 import java.sql.SQLException;
 
@@ -12,14 +17,21 @@ public class Main {
             connexionService.initDatabase();
 
             UserDao userDao = new UserDao(connexionService.getDatabaseConnection());
-            UserServiceImpl userService = new UserServiceImpl(userDao);
+            IUserService userService = new UserServiceImpl(userDao);
             UserController userController = new UserController(userService);
 
             userController.select();
 
+            ItemDao itemDao = new ItemDao(connexionService.getDatabaseConnection());
+            IItemService itemService = new ItemServiceImpl(itemDao);
+            ItemController itemController = new ItemController(itemService);
+
+            itemController.select();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
     }
 }

@@ -1,8 +1,9 @@
-package Service;
+package Service.contract;
 
-import Dao.UserDao;
 import Entity.User;
+import Exception.UserAlreadyExistsException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserService {
@@ -11,7 +12,7 @@ public interface IUserService {
 
     User getById(Long id);
 
-    void  addUser (User user);
+    void  addUser (User user) throws SQLException, UserAlreadyExistsException;
 
     void updateUser(User user);
 

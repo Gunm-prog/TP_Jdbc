@@ -1,23 +1,25 @@
 package Dao;
 
 import Entity.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
+import Exception.UserAlreadyExistsException;
+
 
 public class UserDao {
 
-    private Connection connection;
+    private final Connection connection;
 
     public UserDao(Connection connection) {
         this.connection = connection;
     }
 
     //Add User
-    public void addUser(User user) {
+    public void addUser(User user) throws SQLException, UserAlreadyExistsException {
+
         try {
             String query = "INSERT INTO Users (employeNumber, lastname, firstname, email, login, password) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -29,11 +31,12 @@ public class UserDao {
                 preparedStatement.setString(6, user.getPassword());
 
                 preparedStatement.executeUpdate();
-
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+          //Personalized exception to prevent duplication
+        } catch (SQLIntegrityConstraintViolationException e) {
+            throw new UserAlreadyExistsException( e.getMessage() );
         }
+
     }
 
     //Get users' list
@@ -72,7 +75,10 @@ public class UserDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (InputMismatchException ime){
+            System.out.println("Only numbers are allowed!");
         }
+
         return user;
     }
 

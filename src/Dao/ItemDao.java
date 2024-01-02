@@ -1,4 +1,112 @@
 package Dao;
 
+import Entity.Item;
+import Entity.ItemStatus;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemDao {
+
+    private final Connection connection;
+
+    public ItemDao(Connection connection) { this.connection=connection;}
+
+    //Add Item
+    public void addItem(Item item) throws SQLException {
+        try {
+            String query = "INSERT INTO Items (status, name, description) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, String.valueOf(item.getStatus()));
+                preparedStatement.setString(2, item.getName());
+                preparedStatement.setString(3, item.getDescription());
+
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    //Get items' list
+    public List<Item> findAll() {
+        List<Item> items = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM Items";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        items.add(mapResultSetToItem(resultSet));
+                    }
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+
+
+    //get Item by id
+    public Item getById(Long id) {
+        Item item = null;
+        try {
+            String query = "SELECT * FROM Items WHERE id=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setLong(1, id);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        item = mapResultSetToItem(resultSet);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    //Update an item
+    public void updateItem(Item item) {
+        try {
+            String query = "UPDATE Items SET status=?, name=?, description=? WHERE id=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, String.valueOf(item.getStatus()));
+                preparedStatement.setString(2, item.getName());
+                preparedStatement.setString(3, item.getDescription());
+                preparedStatement.setLong(4, item.getId());
+
+                preparedStatement.executeUpdate();
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Delete item by id
+    public void deleteItem(Long id) {
+        try {
+            String query = "DELETE FROM Items WHERE id=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setLong(1, id);
+
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Conversion method mapping request's result to an Item object
+    private Item mapResultSetToItem(ResultSet resultSet) throws SQLException {
+        Item item = new Item();
+        item.setId(resultSet.getLong("id"));
+        item.setStatus(ItemStatus.valueOf(resultSet.getString("status")));
+        item.setName(resultSet.getString("name"));
+        item.setDescription(resultSet.getString("description"));
+        return item;
+    }
+
 }

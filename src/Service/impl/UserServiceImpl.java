@@ -1,10 +1,12 @@
-package Service_Impl;
+package Service.impl;
 
 import Dao.UserDao;
 import Entity.User;
-import Service.IUserService;
+import Exception.UserAlreadyExistsException;
+import Service.contract.IUserService;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements IUserService {
@@ -28,7 +30,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(User user) throws SQLException, UserAlreadyExistsException {
         userDao.addUser(user);
     }
 

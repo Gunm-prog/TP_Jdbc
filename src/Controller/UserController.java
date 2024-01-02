@@ -1,8 +1,10 @@
 package Controller;
 
-import Service.IUserService;
 import Entity.User;
+import Service.contract.IUserService;
+import Exception.UserAlreadyExistsException;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -87,10 +89,17 @@ public class UserController {
         newUser.setLogin(login);
         newUser.setPassword(password);
 
-        //Calling addUser method in order to add user
-        userService.addUser(newUser);
-
-        System.out.println("User successfully added");
+        try{
+            //Calling addUser method in order to add user
+            userService.addUser(newUser);
+            System.out.println("User successfully added!");
+        } catch( UserAlreadyExistsException e ){
+            System.out.println("User addition failed!");
+            System.out.println(e.getMessage());
+        } catch (SQLException e ){
+            System.out.println("User addition failed!");
+            e.printStackTrace();
+        }
     }
 
 

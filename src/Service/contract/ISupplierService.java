@@ -1,5 +1,7 @@
-package TpJDBC.src.Service;
+package Service.contract;
 
 public interface ISupplierService {
+
+
     
 }

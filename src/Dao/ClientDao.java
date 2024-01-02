@@ -1,4 +1,4 @@
-package TpJDBC.src.Dao;
+package Dao;
 
 import TpJDBC.src.Entity.Client;
 import java.sql.Connection;
@@ -17,7 +17,7 @@ public class ClientDao {
     private String lastName;
     private String email;
     private String adress;
-    
+
     public void create(Client client){
         final String insert = "INSERT INTO Clients"
                 + " VALUES ("
@@ -81,6 +81,7 @@ public class ClientDao {
         }catch(ClassNotFoundException | SQLException e){
             System.out.println(e);
         }
+        return clients;
     }
     
     public void read(long id){
@@ -162,5 +163,16 @@ public class ClientDao {
         }catch(ClassNotFoundException | SQLException e){
             System.out.println(e);
         }
+    }
+    
+    private Client mapResultSetToClient(ResultSet resultSet) throws SQLException {
+        Client client = new Client();
+        client.setId(resultSet.getLong("id"));
+        client.setClientNumber(resultSet.getInt("clientNumber"));
+        client.setLastname(resultSet.getString("lastName"));
+        client.setFirstname(resultSet.getString("fistname"));
+        client.setEmail(resultSet.getString("email"));
+        client.setAdress(resultSet.getString("adress"));
+        return client;
     }
 }

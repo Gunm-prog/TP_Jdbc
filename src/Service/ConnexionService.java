@@ -61,7 +61,16 @@ public class ConnexionService {
         URL = properties.getProperty("jdbc.url");
         dbname = properties.getProperty("jdbc.dbname");
         username = properties.getProperty("jdbc.username");
-        password = properties.getProperty("jdbc.password");
+
+        String pass = properties.getProperty("jdbc.password");
+
+        //si pas de password necessaire,
+        // la valeur renvoyée par getProperty sera Null, qui fera bugger le sql, je remplace alors le Null par une String vide.
+        if( pass != null ) {
+            password = pass;
+        } else { password = ""; }
+
+            //je renseigne ici les constantes, parce qu'il faut les completer avec le db.properties
         createDatabase = "CREATE DATABASE IF NOT EXISTS " + dbname + " CHARACTER SET utf8;";
         useDatabase = "use " + dbname;
         dropDatabase = "DROP DATABASE " + dbname;

@@ -1,10 +1,14 @@
-package TpJDBC.src;
-
+import Controller.ClientController;
+import Controller.ItemController;
 import Controller.SupplierController;
+import Controller.UserController;
+import Dao.ItemDao;
+import Dao.UserDao;
+import Service.impl.ClientServiceImpl;
+import Service.impl.ItemServiceImpl;
+import Service.impl.UserServiceImpl;
 import Service_Impl.SupplierServiceImpl;
-import TpJDBC.src.ConnexionService;
-import TpJDBC.src.Controller.ClientController;
-import TpJDBC.src.Service_Impl.ClientServiceImpl;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Scanner;
@@ -13,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean run = true;
-        
+
         try{
             ConnexionService connexionService = new ConnexionService();
             connexionService.initDatabase();
@@ -21,13 +25,13 @@ public class Main {
 
             Connection databaseConnection;
 
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+         //   databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+            databaseConnection =  connexionService.getDatabaseConnection();
 
-            SupplierController cc = new SupplierController(new SupplierServiceImpl(databaseConnection));
-
-            cc.userChose();
-
-            ClientController clientController = new ClientController(new ClientServiceImpl(databaseConnection));
+            ClientController clientController = new ClientController( new ClientServiceImpl( databaseConnection ) );
+            UserController userController = new UserController( new UserServiceImpl( new UserDao( databaseConnection ) ) );
+            ItemController itemController = new ItemController( new ItemServiceImpl( new ItemDao( databaseConnection ) ) );
+            SupplierController supplierController = new SupplierController( new SupplierServiceImpl( databaseConnection ) );
 
             while (run) {
                 System.out.println();
@@ -46,27 +50,27 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        clientController.userChoice();
+                        itemController.select();
                         break;
                     case 2:
                         clientController.userChoice();
                         break;
                     case 3:
-                        clientController.userChoice();
+                        supplierController.userChose();
                         break;
                     case 4:
-                        clientController.userChoice();
+                        userController.select();
                         break;
                     case 0:
                         System.out.println("Retour au menu principal.");
                         run = false;
                         break;
                     default:
-                        System.out.println("Choix invalide. Veuillez réessayer.");
+                        System.out.println("Choix invalide. Veuillez rï¿½essayer.");
                 }
             }
         }catch(Exception e){
             System.out.println(e);
-        } 
+        }
     }
 }

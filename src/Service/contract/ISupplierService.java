@@ -1,6 +1,5 @@
-package Service;
+package Service.contract;
 
-import Dao.SupplierDAO;
 import Entity.Supplier;
 
 import java.util.List;

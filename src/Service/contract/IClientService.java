@@ -1,6 +1,7 @@
 package TpJDBC.src.Service;
 
 import TpJDBC.src.Entity.Client;
+
 import java.util.List;
 
 public interface IClientService {
@@ -14,5 +15,5 @@ public interface IClientService {
     List<Client> readAll();
     
     void delete(Long id);
-   
+
 }

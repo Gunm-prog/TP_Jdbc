@@ -1,4 +1,4 @@
-package TpJDBC.src.Service_Impl;
+package Service.impl;
 
 import TpJDBC.src.Dao.ClientDao;
 import TpJDBC.src.Service.IClientService;

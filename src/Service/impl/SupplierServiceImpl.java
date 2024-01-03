@@ -2,7 +2,7 @@ package Service_Impl;
 
 import Dao.SupplierDAO;
 import Entity.Supplier;
-import Service.ISupplierService;
+import Service.contract.ISupplierService;
 
 import java.sql.Connection;
 import java.util.List;

@@ -1,7 +1,7 @@
 package Controller;
 
 import Entity.Supplier;
-import Service.ISupplierService;
+import Service.contract.ISupplierService;
 
 import java.util.List;
 import java.util.Scanner;

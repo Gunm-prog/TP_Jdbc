@@ -61,6 +61,12 @@ public class SupplierController {
         }
       }
 
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour valider l'e-mail
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+
     private void addSupplier(Scanner scanner) {
         System.out.println("Add Supplier :");
         System.out.println("------------------------");
@@ -72,8 +78,16 @@ public class SupplierController {
         System.out.print("Supplier Name : ");
         String name = scanner.nextLine();
 
-        System.out.print("Supplier Email : ");
-        String email = scanner.nextLine();
+        // Validation de l'e-mail
+        String email;
+        do {
+            System.out.print("Supplier Email : ");
+            email = scanner.nextLine();
+
+            if (!isValidEmail(email)) {
+                System.out.println("Email adress invalid. Please retry.");
+            }
+        } while (!isValidEmail(email));
 
         System.out.print("Supplier Adress : ");
         String address = scanner.nextLine();

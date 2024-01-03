@@ -1,10 +1,13 @@
 package Service;
 
+import Dao.UserDao;
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class ConnexionService {
@@ -54,7 +57,7 @@ public class ConnexionService {
 
     String dropDatabase = "DROP DATABASE " + dbname;
 
-    public ConnexionService() {
+    public ConnexionService() throws SQLException {
 
         Properties properties = getDbProperties();
         JdbcDriver = properties.getProperty("jdbc.driver.class");
@@ -74,6 +77,9 @@ public class ConnexionService {
         createDatabase = "CREATE DATABASE IF NOT EXISTS " + dbname + " CHARACTER SET utf8;";
         useDatabase = "use " + dbname;
         dropDatabase = "DROP DATABASE " + dbname;
+
+        databaseConnection = DriverManager.getConnection(URL + "?allowPublicKeyRetrieval=true&useSSL=false", username, password);
+        statement = databaseConnection.createStatement();
     }
     /*
      la methode getDatabaseConnection a besoin de ppointer vers la table de données
@@ -83,7 +89,7 @@ public class ConnexionService {
        //return DriverManager.getConnection("jdbc:mysql://localhost:3306/tpjdbc?useSSL=false", "root", "");
        return DriverManager.getConnection(URL + "/" + dbname + "?allowPublicKeyRetrieval=true&useSSL=false", username, password);
     }
-    public void initDatabase(){
+    public void initDatabase(String[] args){
         try{
             Class.forName(JdbcDriver);
 
@@ -110,6 +116,13 @@ public class ConnexionService {
             statement.executeUpdate(createTableItem);
             System.out.println("Tables crées avec succès");
             System.out.println();
+
+            Arrays.stream(args).forEach(arg -> {
+                if (arg.equals("with_dataset")) {
+                    this.loadDataset( databaseConnection );
+                }
+                //add more args for init database here, in another if
+            });
         }catch(ClassNotFoundException | SQLException e){
             System.out.println(e);
         }
@@ -138,6 +151,14 @@ public class ConnexionService {
             System.out.println(e.getMessage());
         }
         return properties;
+    }
+
+    public void loadDataset(Connection dbConnection) {
+        System.out.println("Dataset injection...");
+
+        UserDao userDao = new UserDao( dbConnection );
+        userDao.loadUserDataSet();
+
     }
 }
 

@@ -124,4 +124,23 @@ public class UserDao {
         user.setPassword(resultSet.getString("password"));
         return user;
     }
+
+    public void loadUserDataSet() throws RuntimeException {
+        List.of(
+                new User(48562, "Dylan", "Bob", "bob@dylan.gmail", "bobyD", "bob123"),
+                new User(45454, "Dude", "Sam", "dude@sam.gmail", "Sam_D", "123456"),
+                new User(15101, "Murray", "Bill", "bill@murray.gmail", "hillybilly", "bilmu01"),
+                new User(78788, "Durand", "Jean-Raymond", "jraymond@durand.gmail", "JR_D", "456"),
+                new User(48562, "Shaw", "Arthy", "arthy@shaw.gmail", "arthy48", "1245")
+        ).forEach(userData -> {
+            System.out.print( "inject : " + userData.toString() );
+            try {//Lambda force the try catch here, for each query's execution
+                this.addUser( userData );
+                System.out.println( "   SUCCESS");
+            } catch (SQLException e) {
+                System.out.println( "   FAILED");
+                System.out.println( e.getMessage() );
+            }
+        });
+    }
 }

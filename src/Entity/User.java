@@ -16,6 +16,16 @@ public class User implements Serializable {
     //private boolean isConnected;
 
 
+    public User(){};
+    public User(int number, String lastname, String firstname, String email, String login, String password ) {
+        this.employeeNb = number;
+        this.lastname = lastname;
+        this.firstname = firstname;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }

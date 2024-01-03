@@ -55,10 +55,10 @@ public class ItemController {
         System.out.println("------------------------------");
 
         System.out.println("Item Number: ");
-        int number = scanner.nextInt();;
+        int number = scanner.nextInt();
 
         System.out.println("Item Status: ");
-        String status = getStatusChoice( scanner );;
+        String status = getStatusChoice( scanner );
 
         System.out.println("Item's name: ");
         String name = scanner.nextLine();

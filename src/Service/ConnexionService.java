@@ -37,8 +37,8 @@ public class ConnexionService {
 
     final String createTableItem = "CREATE TABLE IF NOT EXISTS Items ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-        + "number INT NOT NULL, "
-        + "status ENUM('sold', 'for_sell') NOT NULL UNIQUE,"
+        + "number INT NOT NULL UNIQUE, "
+        + "status ENUM('sold', 'for_sell') NOT NULL,"
         + "name VARCHAR(255) NOT NULL,"
         + "description VARCHAR(255) NOT NULL)";
 

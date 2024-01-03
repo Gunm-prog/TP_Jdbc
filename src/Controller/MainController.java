@@ -31,7 +31,9 @@ public class MainController {
 
             Connection databaseConnection;
 
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+        //    databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+        databaseConnection = connexionService.getDatabaseConnection();
+
 
             clientController = new ClientController(new ClientServiceImpl(databaseConnection));
             itemController = new ItemController(new ItemServiceImpl(new ItemDao(databaseConnection)));

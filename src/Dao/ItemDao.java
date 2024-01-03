@@ -2,6 +2,7 @@ package Dao;
 
 import Entity.Item;
 import Entity.ItemStatus;
+import Service.ConnexionService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

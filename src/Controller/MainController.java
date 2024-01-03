@@ -3,16 +3,11 @@ package Controller;
 import Dao.ItemDao;
 import Dao.UserDao;
 import Service.ConnexionService;
-import Controller.SupplierController;
 import Service_Impl.SupplierServiceImpl;
-import Controller.ItemController;
 import Service.impl.ItemServiceImpl;
-import Controller.UserController;
 import Service.impl.UserServiceImpl;
-import Service.ConnexionService;
 import Service.impl.ClientServiceImpl;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Scanner;
 
 public class MainController {
@@ -32,7 +27,7 @@ public class MainController {
             Connection databaseConnection;
 
         //    databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-        databaseConnection = connexionService.getDatabaseConnection();
+            databaseConnection = connexionService.getDatabaseConnection();
 
 
             clientController = new ClientController(new ClientServiceImpl(databaseConnection));

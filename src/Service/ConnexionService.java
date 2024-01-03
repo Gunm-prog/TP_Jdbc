@@ -10,7 +10,7 @@ public class ConnexionService {
     private Statement statement;
 
     final String createDatabase = "CREATE DATABASE IF NOT EXISTS TpJDBC CHARACTER SET utf8;";
-    final String useDatabase = "use TpJDBC";
+    static final String useDatabase = "use TpJDBC";
     final String createTableUser = "CREATE TABLE IF NOT EXISTS Users ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
         + "employeNumber INT NOT NULL UNIQUE, "
@@ -44,15 +44,20 @@ public class ConnexionService {
 
     final String dropDatabase = "DROP DATABASE TpJDBC";
 
+    /*
+     la methode getDatabaseConnection a besoin de ppointer vers la table de données
+     // les controller en ont besoin dans le mainController
+     */
     public Connection getDatabaseConnection() throws SQLException {
-       return DriverManager.getConnection("jdbc:mysql://localhost:3306/TpJDBC?useSSL=false", "root", "");
+       return DriverManager.getConnection("jdbc:mysql://localhost:3306/tpjdbc?useSSL=false", "root", "");
     }
     public void initDatabase(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-         //   databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-            databaseConnection = this.getDatabaseConnection();
+            //ici il faut se connecter sans pointer vers la bdd tpjdbc parce qu'elle n'existe pas encore
+            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+         //   databaseConnection = this.getDatabaseConnection();
 
             statement = databaseConnection.createStatement();
             

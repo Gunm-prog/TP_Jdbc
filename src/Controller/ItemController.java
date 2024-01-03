@@ -43,7 +43,6 @@ public class ItemController {
                 case 0 -> {
                     System.out.println("Exit Menu");
                     isContinue = false;
-                    //System.exit(0);
                 }
                 default -> System.out.println("Invalid selection: try again!");
             }

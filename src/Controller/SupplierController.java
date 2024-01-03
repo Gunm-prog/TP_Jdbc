@@ -17,7 +17,9 @@ public class SupplierController {
     public void userChose(){
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        boolean isContinue = true;
+
+        while (isContinue) {
 
             System.out.println("1. Ajouter un fournisseur");
             System.out.println("2. Afficher la liste des fournisseurs");
@@ -48,8 +50,8 @@ public class SupplierController {
                     deleteSupplier(scanner);
                     break;
                 case 0:
-                    System.out.println("Fin du programme.");
-                    System.exit(0);
+                    System.out.println("Exit Menu.");
+                    isContinue = false;
                 default:
                     System.out.println("Choix invalide. Veuillez réessayer.");
             }

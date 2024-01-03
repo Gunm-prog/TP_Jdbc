@@ -33,10 +33,11 @@ public class UserController {
             System.out.println("------------------------");
             System.out.println();
 
-            System.out.println("Selection: ");
+            int choice = makeControlledIntInput(scanner, "Selection: " );
+        /*    System.out.println("Selection: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
-
+*/
             //get user's choice using switch case method
             switch (choice) {
                 case 1:
@@ -64,28 +65,36 @@ public class UserController {
         }
     }
 
+
+
     private void addUser (Scanner scanner) {
         System.out.println("Add user: ");
         System.out.println("------------------------------");
 
-        System.out.println("User Number: ");
+        int employeeNb = makeControlledIntInput(scanner, "User Number: ");
+        /*System.out.println("User Number: ");
         int employeeNb = scanner.nextInt();
-        scanner.nextLine();
+        scanner.nextLine();*/
 
-        System.out.println("User's lastname: ");
-        String lastname = scanner.nextLine();
+        String lastname = makeControlledStringInput(scanner, "User's lastname: ", 255);
+        /*System.out.println("User's lastname: ");
+        String lastname = scanner.nextLine();*/
 
-        System.out.println("User's firstname: ");
-        String firstname = scanner.nextLine();
+        String firstname = makeControlledStringInput(scanner, "User's firstname: ", 255);
+        /*System.out.println("User's firstname: ");
+        String firstname = scanner.nextLine();*/
 
-        System.out.println("User's email: ");
-        String email = scanner.nextLine();
+        String email = makeControlledStringInput(scanner, "User's email: ", 255);
+        /*System.out.println("User's email: ");
+        String email = scanner.nextLine();*/
 
-        System.out.println("User's pseudo: ");
-        String login = scanner.nextLine();
+        String login = makeControlledStringInput(scanner, "User's pseudo: ", 255);
+       /* System.out.println("User's pseudo: ");
+        String login = scanner.nextLine();*/
 
-        System.out.println("User's password: ");
-        String password = scanner.nextLine();
+        String password = makeControlledStringInput(scanner, "User's password: ", 255);
+        /*System.out.println("User's password: ");
+        String password = scanner.nextLine();*/
 
         //Creation of Object User
         User newUser = new User();
@@ -136,10 +145,11 @@ public class UserController {
 
     private void getById(Scanner scanner) {
 
-        System.out.println("Enter user's id: ");
+        Long id = (long) makeControlledIntInput(scanner, "Enter user's id: ");
+        /*System.out.println("Enter user's id: ");
         //get user's id
         Long id = scanner.nextLong();
-        scanner.nextLine();
+        scanner.nextLine();*/
 
         //Calling getById method to get a specific user thanks to its id
         User user = userService.getById(id);
@@ -162,10 +172,11 @@ public class UserController {
     private void updateUser (Scanner scanner) {
         System.out.println("Update user: ");
 
-        System.out.println("Enter user's id to update: ");
+        Long id = (long) makeControlledIntInput(scanner, "Enter user's id to update: ");
+        /*System.out.println("Enter user's id to update: ");
         //Get user's id
         Long id = scanner.nextLong();
-        scanner.nextLine();
+        scanner.nextLine();*/
 
         //Check if user exists
         User existingUser = userService.getById(id);
@@ -173,24 +184,30 @@ public class UserController {
         if (existingUser != null) {
             System.out.println("Enter user's new datas: ");
 
-            System.out.println("User Number: ");
+            int newEmployeeNb = makeControlledIntInput(scanner, "User Number: ");
+            /*System.out.println("User Number: ");
             int newEmployeeNb = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine();*/
 
-            System.out.println("User's lastname: ");
-            String newLastname = scanner.nextLine();
+            String newLastname = makeControlledStringInput(scanner, "User's lastname: ", 255);
+            /*System.out.println("User's lastname: ");
+            String newLastname = scanner.nextLine();*/
 
-            System.out.println("User's firstname: ");
-            String newFirstname = scanner.nextLine();
+            String newFirstname = makeControlledStringInput(scanner, "User's firstname: ", 255);
+            /*System.out.println("User's firstname: ");
+            String newFirstname = scanner.nextLine();*/
 
-            System.out.println("User's email: ");
-            String newEmail = scanner.nextLine();
+            String newEmail = makeControlledStringInput(scanner, "User's email: ", 255);
+            /*System.out.println("User's email: ");
+            String newEmail = scanner.nextLine();*/
 
-            System.out.println("User's pseudo: ");
-            String newLogin = scanner.nextLine();
+            String newLogin = makeControlledStringInput(scanner, "User's pseudo: ", 255);
+            /*System.out.println("User's pseudo: ");
+            String newLogin = scanner.nextLine();*/
 
-            System.out.println("User's password: ");
-            String newPassword = scanner.nextLine();
+            String newPassword = makeControlledStringInput(scanner, "User's password: ", 255);
+            /*System.out.println("User's password: ");
+            String newPassword = scanner.nextLine();*/
 
             //Updating Object user with new datas entered by user
             User updatedUser = new User();
@@ -214,9 +231,10 @@ public class UserController {
     private void deleteUser(Scanner scanner) {
         System.out.println("Delete user :");
 
-        System.out.print("Enter user's id to delete : ");
+        Long id = (long) makeControlledIntInput(scanner, "Enter user's id to delete: ");
+        /*System.out.print("Enter user's id to delete : ");
         Long id = scanner.nextLong();
-        scanner.nextLine();
+        scanner.nextLine()*/;
 
         // Calling getById method to check if user exists
         User existingUser = userService.getById(id);
@@ -230,5 +248,55 @@ public class UserController {
             System.out.println("User with id: " + id + " not found");
         }
     }
+
+    /**
+     * method allowing to ask something via Scanner and controlling String validity (we ask for a String there)
+     * String is valid if it is not null or empty or superior to maxLength (due to the nb put in the VARCHAR)
+     * While String is not valid, the loop goes on
+     *
+     * @param scanner Scanner Object with System.in parameter
+     * @param question asked for a String
+     * @param maxLength allowed for answer
+     * @return the valid answer as a String
+     */
+    private String makeControlledStringInput( Scanner scanner, String question, int maxLength ) {
+        boolean isOk;
+        String userInput;
+        do{
+            isOk = false;
+            System.out.print('\n' +  question );
+            userInput = scanner.next();
+            if( !userInput.isEmpty() && userInput.length() <= maxLength ){
+                isOk = true;
+            } else {
+                System.out.println( "Entrée invalide. \n La longueur doit être comprise entre 1 et " + maxLength);
+            }
+        } while( !isOk );
+        return userInput;
+    }
+
+    /**
+     * Method controlling that the value entered is a numeric one
+     * @param scanner Scanner Object with System.in parameter
+     * @param question asked for an int
+     * @return the valid answer as an int
+     */
+    private int makeControlledIntInput( Scanner scanner, String question ) {
+        boolean isOk;
+        int  userInput = 0;
+        do{
+            isOk = false;
+            System.out.print('\n' +  question );
+            try {
+                userInput = scanner.nextInt();
+                isOk = true;
+            } catch ( Exception e ) {
+                System.out.println( "Entrée invalide. \n Il faut entrer une valeur numérique" );
+                scanner.next();
+            }
+        } while( !isOk );
+        return userInput;
+    }
+
 
 }

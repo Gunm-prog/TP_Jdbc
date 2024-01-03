@@ -22,16 +22,16 @@ public class UserDao {
 
         try {
             String query = "INSERT INTO Users (employeNumber, lastname, firstname, email, login, password) VALUES (?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, user.getEmployeeNb());
-                preparedStatement.setString(2, user.getLastname());
-                preparedStatement.setString(3, user.getFirstname());
-                preparedStatement.setString(4, user.getEmail());
-                preparedStatement.setString(5, user.getLogin());
-                preparedStatement.setString(6, user.getPassword());
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, user.getEmployeeNb());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getFirstname());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getLogin());
+            preparedStatement.setString(6, user.getPassword());
 
-                preparedStatement.executeUpdate();
-            }
+            preparedStatement.executeUpdate();
+
           //Personalized exception to prevent duplication
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new UserAlreadyExistsException( e.getMessage() );
@@ -45,16 +45,14 @@ public class UserDao {
         List<User> users = new ArrayList<>();
         try {
             String query = "SELECT * FROM Users";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        users.add(mapResultSetToUser(resultSet));
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(mapResultSetToUser(resultSet));
 
-                    }
-                }
             }
         } catch (SQLException e){
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return users;
     }
@@ -64,17 +62,15 @@ public class UserDao {
         User user = null;
         try {
             String query = "SELECT * FROM Users WHERE id=?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setLong(1, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
 
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        user = mapResultSetToUser(resultSet);
-                    }
-                }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = mapResultSetToUser(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } catch (InputMismatchException ime){
             System.out.println("Only numbers are allowed!");
         }
@@ -86,17 +82,17 @@ public class UserDao {
     public void updateUser(User user) {
         try {
             String query = "UPDATE Users SET employeNumber=?, lastname=?, firstname=?, email=?, login=?, password=? WHERE id=?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, user.getEmployeeNb());
-                preparedStatement.setString(2, user.getLastname());
-                preparedStatement.setString(3, user.getFirstname());
-                preparedStatement.setString(4, user.getEmail());
-                preparedStatement.setString(5, user.getLogin());
-                preparedStatement.setString(6, user.getPassword());
-                preparedStatement.setLong(7, user.getId());
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, user.getEmployeeNb());
+            preparedStatement.setString(2, user.getLastname());
+            preparedStatement.setString(3, user.getFirstname());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getLogin());
+            preparedStatement.setString(6, user.getPassword());
+            preparedStatement.setLong(7, user.getId());
 
-                preparedStatement.executeUpdate();
-            }
+            preparedStatement.executeUpdate();
+
         }catch (SQLException e) {
             e.printStackTrace();
         }
@@ -106,11 +102,11 @@ public class UserDao {
     public void deleteUser(Long id) {
         try {
             String query = "DELETE FROM Users WHERE id=?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setLong(1, id);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
 
-                preparedStatement.executeUpdate();
-            }
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

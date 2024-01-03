@@ -65,7 +65,11 @@ public class UserController {
         }
     }
 
-
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour valider l'e-mail
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
 
     private void addUser (Scanner scanner) {
         System.out.println("Add user: ");
@@ -269,7 +273,7 @@ public class UserController {
             if( !userInput.isEmpty() && userInput.length() <= maxLength ){
                 isOk = true;
             } else {
-                System.out.println( "Entrée invalide. \n La longueur doit être comprise entre 1 et " + maxLength);
+                System.out.println( "Invalid input. \n Length must be between 1 and " + maxLength);
             }
         } while( !isOk );
         return userInput;
@@ -291,7 +295,7 @@ public class UserController {
                 userInput = scanner.nextInt();
                 isOk = true;
             } catch ( Exception e ) {
-                System.out.println( "Entrée invalide. \n Il faut entrer une valeur numérique" );
+                System.out.println( "Invalid input. \n You must enter a numerical value" );
                 scanner.next();
             }
         } while( !isOk );

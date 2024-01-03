@@ -44,15 +44,15 @@ public class MainController {
             while (run) {
                 System.out.println();
                 System.out.println("------------------------");
-                System.out.println("1. Menu Article");
-                System.out.println("2. Menu Client");
-                System.out.println("3. Menu Fournisseur");
-                System.out.println("4. Menu Utilisateur");
-                System.out.println("0. Quitter");
+                System.out.println("1. Items");
+                System.out.println("2. Clients");
+                System.out.println("3. Suppliers");
+                System.out.println("4. Users");
+                System.out.println("0. Exit");
                 System.out.println("------------------------");
                 System.out.println();
 
-                System.out.print("Choix : ");
+                System.out.print("Selection : ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -70,11 +70,11 @@ public class MainController {
                         userController.select();
                         break;
                     case 0:
-                        System.out.println("Retour au menu principal.");
+                        System.out.println("Thanks, see you !");
                         run = false;
                         break;
                     default:
-                        System.out.println("Choix invalide. Veuillez r�essayer.");
+                        System.out.println("Wrong choice. Please retry.");
                 }
             }
         }catch(Exception e){

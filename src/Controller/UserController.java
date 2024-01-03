@@ -22,12 +22,16 @@ public class UserController {
         boolean isContinue = true;
 
         while(isContinue) {
+            System.out.println();
+            System.out.println("------------------------");
             System.out.println("1. Add user");
             System.out.println("2. Display user's list");
             System.out.println("3. Display user");
             System.out.println("4. Update user");
             System.out.println("5. Delete user");
             System.out.println("0. Quit");
+            System.out.println("------------------------");
+            System.out.println();
 
             System.out.println("Selection: ");
             int choice = scanner.nextInt();

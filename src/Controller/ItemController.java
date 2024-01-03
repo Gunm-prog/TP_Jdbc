@@ -73,7 +73,6 @@ public class ItemController {
         newItem.setName(name);
         newItem.setDescription(description);
 
-        System.out.println( "contr : " + newItem );
         try{
             //Calling addUser method in order to add item
             itemService.addItem(newItem);

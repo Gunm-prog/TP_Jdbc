@@ -22,7 +22,7 @@ public class MainController {
         try{
             ConnexionService connexionService = new ConnexionService();
             connexionService.initDatabase();
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName( ConnexionService.JdbcDriver );
 
             Connection databaseConnection;
 
@@ -40,7 +40,6 @@ public class MainController {
     }
     
     public static void select(){
-        System.out.println("test");
         try{
             while (run) {
                 System.out.println();

@@ -1,16 +1,26 @@
 package Service;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class ConnexionService {
     private Connection databaseConnection;
     private Statement statement;
 
-    final String createDatabase = "CREATE DATABASE IF NOT EXISTS TpJDBC CHARACTER SET utf8;";
-    static final String useDatabase = "use TpJDBC";
+    public static String JdbcDriver;
+    public static String URL;
+
+    public static String dbname;
+
+    public static String username;
+    public static String password;
+
+    public String createDatabase = "CREATE DATABASE IF NOT EXISTS " + dbname + " CHARACTER SET utf8;";
+    static String useDatabase = "use " + dbname;
     final String createTableUser = "CREATE TABLE IF NOT EXISTS Users ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
         + "employeNumber INT NOT NULL UNIQUE, "
@@ -42,21 +52,35 @@ public class ConnexionService {
         + "name VARCHAR(255) NOT NULL,"
         + "description VARCHAR(255) NOT NULL)";
 
-    final String dropDatabase = "DROP DATABASE TpJDBC";
+    String dropDatabase = "DROP DATABASE " + dbname;
 
+    public ConnexionService() {
+
+        Properties properties = getDbProperties();
+        JdbcDriver = properties.getProperty("jdbc.driver.class");
+        URL = properties.getProperty("jdbc.url");
+        dbname = properties.getProperty("jdbc.dbname");
+        username = properties.getProperty("jdbc.username");
+        password = properties.getProperty("jdbc.password");
+        createDatabase = "CREATE DATABASE IF NOT EXISTS " + dbname + " CHARACTER SET utf8;";
+        useDatabase = "use " + dbname;
+        dropDatabase = "DROP DATABASE " + dbname;
+    }
     /*
      la methode getDatabaseConnection a besoin de ppointer vers la table de données
      // les controller en ont besoin dans le mainController
      */
     public Connection getDatabaseConnection() throws SQLException {
-       return DriverManager.getConnection("jdbc:mysql://localhost:3306/tpjdbc?useSSL=false", "root", "");
+       //return DriverManager.getConnection("jdbc:mysql://localhost:3306/tpjdbc?useSSL=false", "root", "");
+       return DriverManager.getConnection(URL + "/" + dbname + "?allowPublicKeyRetrieval=true&useSSL=false", username, password);
     }
     public void initDatabase(){
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(JdbcDriver);
 
             //ici il faut se connecter sans pointer vers la bdd tpjdbc parce qu'elle n'existe pas encore
-            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+       //     databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+            databaseConnection = DriverManager.getConnection(URL + "?allowPublicKeyRetrieval=true&useSSL=false", username, password);
          //   databaseConnection = this.getDatabaseConnection();
 
             statement = databaseConnection.createStatement();
@@ -91,6 +115,20 @@ public class ConnexionService {
         }catch(SQLException e){
             System.out.println(e);
         }
+    }
+
+    /**
+     * method reading file db.properties to return a properties array (key-value)
+     * @return
+     */
+    private static Properties getDbProperties() {
+        Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream("db.properties")){
+            properties.load(fis);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return properties;
     }
 }
 

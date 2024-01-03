@@ -19,7 +19,6 @@ public class ItemDao {
 
     //Add Item
     public void addItem(Item item) throws SQLException {
-        System.out.println( "dao : " + item );
         try {
             String query = "INSERT INTO Items (number, status, name, description) VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

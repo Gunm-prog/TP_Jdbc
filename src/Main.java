@@ -54,6 +54,7 @@ public class Main {
                     case 0:
                         System.out.println("Retour au menu principal.");
                         run = false;
+                        break;
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
                 }

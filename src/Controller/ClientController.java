@@ -24,7 +24,7 @@ public class ClientController {
             System.out.println("1. Ajouter un client");
             System.out.println("2. Afficher la liste des clients");
             System.out.println("3. Afficher un client spécifique");
-            System.out.println("4. Mettre à jour un client");
+            System.out.println("4. Mettre � jour un client");
             System.out.println("5. Supprimer un client");
             System.out.println("0. Quitter");
             System.out.println("------------------------");

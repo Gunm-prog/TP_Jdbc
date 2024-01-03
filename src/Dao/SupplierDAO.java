@@ -105,7 +105,7 @@ public class SupplierDAO {
             }
         } catch (SQLException e) {
             System.out.println(e);
-        }
+         }
     }
 
     //  mapper le résultat de la requête à un objet Supplier

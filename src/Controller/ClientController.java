@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class ClientController {
     private final IClientService clientService;
 
-    //Affecte le service donn� en param�tre
+    //Constructor giving the service in parameter to the attribute
     public ClientController(IClientService clientService) {
         this.clientService = clientService;
     }
     
-    //Menu de s�l�ction des fonctionnalit�es
+    //Select menu
     public void userChoice(){
         Scanner scanner = new Scanner(System.in);
         boolean run = true;
@@ -21,16 +21,16 @@ public class ClientController {
         while (run) {
             System.out.println();
             System.out.println("------------------------");
-            System.out.println("1. Ajouter un client");
-            System.out.println("2. Afficher la liste des clients");
-            System.out.println("3. Afficher un client spécifique");
-            System.out.println("4. Mettre � jour un client");
-            System.out.println("5. Supprimer un client");
-            System.out.println("0. Quitter");
+            System.out.println("1. Add Client");
+            System.out.println("2. Display all Clients");
+            System.out.println("3. Display specific Client");
+            System.out.println("4. Update Client");
+            System.out.println("5. Delete Client");
+            System.out.println("0. Exit");
             System.out.println("------------------------");
             System.out.println();
 
-            System.out.print("Choix : ");
+            System.out.print("Selection : ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -51,33 +51,33 @@ public class ClientController {
                     deleteClient(scanner);
                     break;
                 case 0:
-                    System.out.println("Retour au menu principal.");
+                    System.out.println("Return to main menu.");
                     run = false;
                     break;
                 default:
-                    System.out.println("Choix invalide. Veuillez r�essayer.");
+                    System.out.println("Wrong choice. Please retry.");
             }
         }
     }
     
     //Demande et r�cup�re les informations du client que l'on veut ins�rer en base de donn�es
     private void addClient(Scanner scanner) {
-        System.out.println("Ajouter un client :");
+        System.out.println("Add Client :");
         System.out.println("------------------------");
 
-        System.out.print("Num�ro Client : ");
+        System.out.print("Client Number : ");
         int clientNumber = Integer.valueOf(scanner.nextLine());
-
-        System.out.print("Nom du client : ");
-        String lastname = scanner.nextLine();
         
-        System.out.print("Pr�nom du client : ");
+        System.out.print("Client Firstname : ");
         String firstname = scanner.nextLine();
 
-        System.out.print("Email du client : ");
+        System.out.print("Client Lastname : ");
+        String lastname = scanner.nextLine();
+        
+        System.out.print("Client Email : ");
         String email = scanner.nextLine();
 
-        System.out.print("Adresse du client : ");
+        System.out.print("Client Adress : ");
         String address = scanner.nextLine();
 
         //Cr�ation de l'objet client avec les informations donn�es
@@ -91,27 +91,27 @@ public class ClientController {
         //Appel au service pour g�rer l'insertion en base
         clientService.create(client);
 
-        System.out.println("Client enregistr� avec succ�s.");
+        System.out.println("Client successfully created.");
     }
 
     //Affiche la liste des clients
     private void getAllClients() {
-        System.out.println("Liste des clients :");
+        System.out.println("Clients List :");
 
         //R�cup�ration de la liste des client en base
         List<Client> clients = clientService.readAll();
 
         //V�rifie la pr�sence de client en base
         if (clients.isEmpty()) {
-            System.out.println("Aucun client trouv�.");
+            System.out.println("No Client found");
         } else {
             for (Client client : clients) {
                 System.out.println("ID : " + client.getId());
-                System.out.println("Num�ro Client : " + client.getClientNumber());
-                System.out.println("Pr�nom : " + client.getFirstname());
-                System.out.println("Nom : " + client.getLastname());
+                System.out.println("Client Number : " + client.getClientNumber());
+                System.out.println("Firstname : " + client.getFirstname());
+                System.out.println("Lastname : " + client.getLastname());
                 System.out.println("Email : " + client.getEmail());
-                System.out.println("Adresse : " + client.getAdress());
+                System.out.println("Adress : " + client.getAdress());
                 System.out.println("------------------------");
             }
         }
@@ -120,26 +120,26 @@ public class ClientController {
     //Affiche la le client dont l'ID est donn�
     private void getClientById(Scanner scanner) {
 
-        System.out.print("Entrez l'ID du client : ");
+        System.out.print("Enter Client ID : ");
         long clientId = scanner.nextLong();
         scanner.nextLine();
 
         Client client = clientService.read(clientId);
 
         System.out.println("ID : " + client.getId());
-        System.out.println("Num�ro : " + client.getClientNumber());
-        System.out.println("Pr�nom : " + client.getFirstname());
-        System.out.println("Nom : " + client.getLastname());
+        System.out.println("Client Number : " + client.getClientNumber());
+        System.out.println("Firstname : " + client.getFirstname());
+        System.out.println("Lastname : " + client.getLastname());
         System.out.println("Email : " + client.getEmail());
-        System.out.println("Adresse : " + client.getAdress());
+        System.out.println("Adress : " + client.getAdress());
         System.out.println("------------------------");
     }
 
     //Demande les informations pour la mise � jour d'un client
     private void updateClient(Scanner scanner) {
-        System.out.println("Mettre � jour un client :");
+        System.out.println("Client Update :");
 
-        System.out.print("Entrez l'ID du client � mettre � jour : ");
+        System.out.print("Enter Client ID : ");
         long clientId = scanner.nextLong();
         scanner.nextLine();
 
@@ -147,22 +147,23 @@ public class ClientController {
         Client client = clientService.read(clientId);
 
         if (client != null) {
-            System.out.println("Saisissez les nouvelles donn�es du client :");
+            System.out.println("Enter Client new data :");
 
-            System.out.print("Nouveau num�ro du client : ");
+            System.out.print("New Client Number : ");
             int newNumber = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.print("Nouveau nom du client : ");
-            String newLastname = scanner.nextLine();
-            
-            System.out.print("Nouveau pr�nom du client : ");
+                        
+            System.out.print("New Client Firstname : ");
             String newFirstname = scanner.nextLine();
+            
+            System.out.print("New Client Lastname : ");
+            String newLastname = scanner.nextLine();
 
-            System.out.print("Nouvel email du client : ");
+            System.out.print("New Client Email : ");
             String newEmail = scanner.nextLine();
 
-            System.out.print("Nouvelle adresse du client : ");
+            System.out.print("New Client Adress : ");
             String newAddress = scanner.nextLine();
 
             Client newClient = new Client();
@@ -176,17 +177,17 @@ public class ClientController {
             //Appel au service pour g�rer la mise � jour en base
             clientService.update(newClient);
 
-            System.out.println("Client mis � jour avec succ�s.");
+            System.out.println("Client successfully updated.");
         } else {
-            System.out.println("Aucun client trouv� avec l'ID " + clientId);
+            System.out.println("No client with ID " + clientId);
         }
     }
 
     //Supprime le client dont l'ID est donn�
     private void deleteClient(Scanner scanner) {
-        System.out.println("Supprimer un client :");
+        System.out.println("Delete Client :");
 
-        System.out.print("Entrez l'ID du client � supprimer : ");
+        System.out.print("Enter Client ID : ");
         long clientId = scanner.nextLong();
         scanner.nextLine();
 

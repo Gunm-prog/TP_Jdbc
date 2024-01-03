@@ -22,12 +22,16 @@ public class ItemController {
         boolean isContinue = true;
 
         while(isContinue) {
+            System.out.println();
+            System.out.println("------------------------");
             System.out.println("1. Add item");
             System.out.println("2. Display item's list");
             System.out.println("3. Display item");
             System.out.println("4. Update item");
             System.out.println("5. Delete item");
             System.out.println("0. Quit");
+            System.out.println("------------------------");
+            System.out.println();
 
             System.out.println("Selection: ");
             int choice = scanner.nextInt();

@@ -60,6 +60,12 @@ public class ClientController {
         }
     }
     
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour valider l'e-mail
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+    
     //Demande et r�cup�re les informations du client que l'on veut ins�rer en base de donn�es
     private void addClient(Scanner scanner) {
         System.out.println("Add Client :");
@@ -74,8 +80,17 @@ public class ClientController {
         System.out.print("Client Lastname : ");
         String lastname = scanner.nextLine();
         
-        System.out.print("Client Email : ");
-        String email = scanner.nextLine();
+        // Validation de l'e-mail
+        String email;
+        do {
+            System.out.print("Client Email : ");
+            email = scanner.nextLine();
+
+            if (!isValidEmail(email)) {
+                System.out.println("Email adress invalid. Please retry.");
+            }
+        } while (!isValidEmail(email));
+        
 
         System.out.print("Client Adress : ");
         String address = scanner.nextLine();
@@ -160,8 +175,16 @@ public class ClientController {
             System.out.print("New Client Lastname : ");
             String newLastname = scanner.nextLine();
 
-            System.out.print("New Client Email : ");
-            String newEmail = scanner.nextLine();
+            // Validation de l'e-mail
+            String newEmail;
+            do {
+                System.out.print("Client Email : ");
+                newEmail = scanner.nextLine();
+
+                if (!isValidEmail(newEmail)) {
+                    System.out.println("Email adress invalid. Please retry.");
+                }
+            } while (!isValidEmail(newEmail));
 
             System.out.print("New Client Adress : ");
             String newAddress = scanner.nextLine();

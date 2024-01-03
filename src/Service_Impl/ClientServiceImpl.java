@@ -9,6 +9,7 @@ import java.util.List;
 public class ClientServiceImpl implements IClientService{
     private final ClientDao clientDao;
     
+    //Le constructeur initialise le clientDao avec la connexion à la base de données qui est en paramètres
     public ClientServiceImpl(Connection databaseConnection){
         this.clientDao = new ClientDao(databaseConnection);
     }

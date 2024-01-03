@@ -2,7 +2,6 @@ package TpJDBC.src.Dao;
 
 import TpJDBC.src.Entity.Client;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -13,18 +12,12 @@ import java.util.List;
 public class ClientDao {
     private final Connection databaseConnection;
     private Statement statement;
-    
-    private long id;
-    private int clientNumber;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String adress;
-    
+     
     public ClientDao(Connection databaseConnection) {
         this.databaseConnection = databaseConnection;
     }
     
+    //Insert le client en paramètre dans la base de donnée
     public void create(Client client){
         System.out.println("test");
         final String insert = "INSERT INTO Clients (number,lastName,firstName,email,adress)"
@@ -44,6 +37,7 @@ public class ClientDao {
         }
     }
     
+    //Récupère la liste des clients présent en base de donnée
     public List<Client> readAll() {
         List<Client> clients = new ArrayList<>();
         try {
@@ -60,6 +54,7 @@ public class ClientDao {
         return clients;
     }
     
+    //Récupère le client dont l'id est donné en paramètre
     public Client read(Long id) {
         Client client = null;
         try {
@@ -78,6 +73,7 @@ public class ClientDao {
         return client;
     }
     
+    //Met à jour dans la base de données le client donné en paramètre
     public void update(Client client){
         final String update = "UPDATE Clients SET"
                 + " number = " + client.getClientNumber() + ", "
@@ -95,6 +91,7 @@ public class ClientDao {
         }
     }
     
+    //Supprime de la base de données le client dont l'id est donné en paramètre
     public void delete(long id){
         final String delete = "DELETE FROM Clients WHERE id = " + id;
         try{
@@ -106,6 +103,7 @@ public class ClientDao {
         }
     }
     
+    //Converti les données d'un resultSet en un objet Client
     private Client mapResultSetToClient(ResultSet resultSet) throws SQLException {
         Client client = new Client();
         client.setId(resultSet.getLong("id"));

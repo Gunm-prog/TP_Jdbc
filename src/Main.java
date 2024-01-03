@@ -6,27 +6,60 @@ import TpJDBC.src.Controller.ClientController;
 import TpJDBC.src.Service_Impl.ClientServiceImpl;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Scanner scanner = new Scanner(System.in);
+        boolean run = true;
+        
         try{
-            ConnexionService cs = new ConnexionService();
-            cs.initDatabase();
+            ConnexionService connexionService = new ConnexionService();
+            connexionService.initDatabase();
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Hello world2!");
             Connection databaseConnection;
 
             databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
 
-            ClientController cc = new ClientController(new ClientServiceImpl(databaseConnection));
+            ClientController clientController = new ClientController(new ClientServiceImpl(databaseConnection));
 
-            cc.userChose();
-        
+            while (run) {
+                System.out.println();
+                System.out.println("------------------------");
+                System.out.println("1. Menu Article");
+                System.out.println("2. Menu Client");
+                System.out.println("3. Menu Fournisseur");
+                System.out.println("4. Menu Utilisateur");
+                System.out.println("0. Quitter");
+                System.out.println("------------------------");
+                System.out.println();
+
+                System.out.print("Choix : ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        clientController.userChose();
+                        break;
+                    case 2:
+                        clientController.userChose();
+                        break;
+                    case 3:
+                        clientController.userChose();
+                        break;
+                    case 4:
+                        clientController.userChose();
+                        break;
+                    case 0:
+                        System.out.println("Retour au menu principal.");
+                        run = false;
+                    default:
+                        System.out.println("Choix invalide. Veuillez réessayer.");
+                }
+            }
         }catch(Exception e){
             System.out.println(e);
-        }
-            
-        
+        } 
     }
 }

@@ -14,7 +14,7 @@ public class ClientController {
     }
     
     //Menu de séléction des fonctionnalitées
-    public void userChose(){
+    public void userChoice(){
         Scanner scanner = new Scanner(System.in);
         boolean run = true;
 

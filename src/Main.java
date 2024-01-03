@@ -40,16 +40,16 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        clientController.userChose();
+                        clientController.userChoice();
                         break;
                     case 2:
-                        clientController.userChose();
+                        clientController.userChoice();
                         break;
                     case 3:
-                        clientController.userChose();
+                        clientController.userChoice();
                         break;
                     case 4:
-                        clientController.userChose();
+                        clientController.userChoice();
                         break;
                     case 0:
                         System.out.println("Retour au menu principal.");

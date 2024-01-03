@@ -31,7 +31,7 @@ public class SupplierDAO {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -48,7 +48,7 @@ public class SupplierDAO {
                     }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
         return suppliers;
     }
@@ -69,7 +69,7 @@ public class SupplierDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
         return supplier;
     }
@@ -89,7 +89,7 @@ public class SupplierDAO {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
@@ -104,7 +104,7 @@ public class SupplierDAO {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 

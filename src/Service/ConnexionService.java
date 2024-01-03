@@ -1,22 +1,14 @@
+package Service;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
- */
-
 public class ConnexionService {
     private Connection databaseConnection;
     private Statement statement;
 
-  //  public Connection getDatabaseConnection() {
-   //     return this.databaseConnection;
- //   }
     final String createDatabase = "CREATE DATABASE IF NOT EXISTS TpJDBC CHARACTER SET utf8;";
     final String useDatabase = "use TpJDBC";
     final String createTableUser = "CREATE TABLE IF NOT EXISTS Users ("

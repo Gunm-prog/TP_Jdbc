@@ -1,8 +1,8 @@
-package Controller;
+package TpJDBC.src.Controller;
 
-import Entity.User;
-import Service.contract.IUserService;
-import Exception.UserAlreadyExistsException;
+import TpJDBC.src.Entity.User;
+import TpJDBC.src.Service.contract.IUserService;
+import TpJDBC.src.Exception.UserAlreadyExistsException;
 
 import java.sql.SQLException;
 import java.util.List;

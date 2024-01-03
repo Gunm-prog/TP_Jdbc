@@ -1,7 +1,7 @@
-package Controller;
+package TpJDBC.src.Controller;
 
-import Entity.Supplier;
-import Service.contract.ISupplierService;
+import TpJDBC.src.Entity.Supplier;
+import TpJDBC.src.Service.contract.ISupplierService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -16,8 +16,9 @@ public class SupplierController {
 
     public void userChose(){
         Scanner scanner = new Scanner(System.in);
+        boolean isContinue = true;
 
-        while (true) {
+        while (isContinue) {
 
             System.out.println("1. Ajouter un fournisseur");
             System.out.println("2. Afficher la liste des fournisseurs");
@@ -49,7 +50,8 @@ public class SupplierController {
                     break;
                 case 0:
                     System.out.println("Fin du programme.");
-                    System.exit(0);
+                    isContinue = false;
+                    break;
                 default:
                     System.out.println("Choix invalide. Veuillez réessayer.");
             }

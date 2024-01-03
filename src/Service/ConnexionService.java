@@ -1,4 +1,4 @@
-package Service;
+package TpJDBC.src.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,7 +38,7 @@ public class ConnexionService {
     final String createTableItem = "CREATE TABLE IF NOT EXISTS Items ("
         + "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
         + "number INT NOT NULL, "
-        + "status ENUM('sold', 'for_sell') NOT NULL UNIQUE,"
+        + "status ENUM('sold', 'for_sell') NOT NULL,"
         + "name VARCHAR(255) NOT NULL,"
         + "description VARCHAR(255) NOT NULL)";
 
@@ -50,9 +50,7 @@ public class ConnexionService {
     public void initDatabase(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-         //   databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
-            databaseConnection = this.getDatabaseConnection();
+            databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
 
             statement = databaseConnection.createStatement();
             

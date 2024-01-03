@@ -1,7 +1,7 @@
-package Dao;
+package TpJDBC.src.Dao;
 
-import Entity.Item;
-import Entity.ItemStatus;
+import TpJDBC.src.Entity.Item;
+import TpJDBC.src.Entity.ItemStatus;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,6 +1,6 @@
-package Service.contract;
+package TpJDBC.src.Service.contract;
 
-import Entity.Supplier;
+import TpJDBC.src.Entity.Supplier;
 
 import java.util.List;
 

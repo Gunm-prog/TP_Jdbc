@@ -1,7 +1,7 @@
-package Service.contract;
+package TpJDBC.src.Service.contract;
 
-import Entity.User;
-import Exception.UserAlreadyExistsException;
+import TpJDBC.src.Entity.User;
+import TpJDBC.src.Exception.UserAlreadyExistsException;
 
 import java.sql.SQLException;
 import java.util.List;

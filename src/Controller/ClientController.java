@@ -1,7 +1,7 @@
-package Controller;
+package TpJDBC.src.Controller;
 
 import TpJDBC.src.Entity.Client;
-import TpJDBC.src.Service.IClientService;
+import TpJDBC.src.Service.contract.IClientService;
 import java.util.List;
 import java.util.Scanner;
 

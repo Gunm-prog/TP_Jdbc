@@ -1,7 +1,7 @@
-package Service.impl;
+package TpJDBC.src.Service.impl;
 
 import TpJDBC.src.Dao.ClientDao;
-import TpJDBC.src.Service.IClientService;
+import TpJDBC.src.Service.contract.IClientService;
 import TpJDBC.src.Entity.Client;
 import java.sql.Connection;
 import java.util.List;

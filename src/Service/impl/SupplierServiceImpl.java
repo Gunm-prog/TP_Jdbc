@@ -1,8 +1,8 @@
-package Service_Impl;
+package TpJDBC.src.Service.impl;
 
-import Dao.SupplierDAO;
-import Entity.Supplier;
-import Service.contract.ISupplierService;
+import TpJDBC.src.Dao.SupplierDAO;
+import TpJDBC.src.Entity.Supplier;
+import TpJDBC.src.Service.contract.ISupplierService;
 
 import java.sql.Connection;
 import java.util.List;

@@ -1,8 +1,8 @@
-package Controller;
+package TpJDBC.src.Controller;
 
-import Entity.Item;
-import Entity.ItemStatus;
-import Service.contract.IItemService;
+import TpJDBC.src.Entity.Item;
+import TpJDBC.src.Entity.ItemStatus;
+import TpJDBC.src.Service.contract.IItemService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -55,10 +55,10 @@ public class ItemController {
         System.out.println("------------------------------");
 
         System.out.println("Item Number: ");
-        int number = scanner.nextInt();;
+        int number = scanner.nextInt();
 
         System.out.println("Item Status: ");
-        String status = getStatusChoice( scanner );;
+        String status = getStatusChoice( scanner );
 
         System.out.println("Item's name: ");
         String name = scanner.nextLine();

@@ -1,12 +1,12 @@
-package Dao;
+package TpJDBC.src.Dao;
 
-import Entity.User;
+import TpJDBC.src.Entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
-import Exception.UserAlreadyExistsException;
+import TpJDBC.src.Exception.UserAlreadyExistsException;
 
 
 public class UserDao {

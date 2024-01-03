@@ -1,9 +1,9 @@
-package Service.impl;
+package TpJDBC.src.Service.impl;
 
 
-import Dao.ItemDao;
-import Entity.Item;
-import Service.contract.IItemService;
+import TpJDBC.src.Dao.ItemDao;
+import TpJDBC.src.Entity.Item;
+import TpJDBC.src.Service.contract.IItemService;
 
 import java.sql.SQLException;
 import java.util.List;

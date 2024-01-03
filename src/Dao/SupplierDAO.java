@@ -1,4 +1,4 @@
-package Dao;
+package TpJDBC.src.Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entity.Supplier;
+import TpJDBC.src.Entity.Supplier;
 
 public class SupplierDAO {
     private Connection connection;

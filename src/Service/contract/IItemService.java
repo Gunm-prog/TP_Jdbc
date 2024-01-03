@@ -1,6 +1,6 @@
-package Service.contract;
+package TpJDBC.src.Service.contract;
 
-import Entity.Item;
+import TpJDBC.src.Entity.Item;
 
 import java.sql.SQLException;
 import java.util.List;

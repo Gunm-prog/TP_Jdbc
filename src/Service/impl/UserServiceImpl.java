@@ -1,9 +1,9 @@
-package Service.impl;
+package TpJDBC.src.Service.impl;
 
-import Dao.UserDao;
-import Entity.User;
-import Exception.UserAlreadyExistsException;
-import Service.contract.IUserService;
+import TpJDBC.src.Dao.UserDao;
+import TpJDBC.src.Entity.User;
+import TpJDBC.src.Exception.UserAlreadyExistsException;
+import TpJDBC.src.Service.contract.IUserService;
 
 
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package TpJDBC.src.Service;
+package TpJDBC.src.Service.contract;
 
 import TpJDBC.src.Entity.Client;
 

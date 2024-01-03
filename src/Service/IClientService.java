@@ -1,4 +1,4 @@
-package Service;
+package TpJDBC.src.Service;
 
 import TpJDBC.src.Entity.Client;
 import java.util.List;

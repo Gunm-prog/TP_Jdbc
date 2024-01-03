@@ -1,4 +1,4 @@
-package Service;
+package TpJDBC.src.Service;
 
 public interface IUserService {
     

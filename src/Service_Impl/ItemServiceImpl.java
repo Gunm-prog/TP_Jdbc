@@ -1,4 +1,6 @@
-package Service_Impl;
+package TpJDBC.src.Service_Impl;
+
+import Service.IItemService;
 
 
 import Service.IItemService;

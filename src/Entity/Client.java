@@ -12,6 +12,7 @@ public class Client implements Serializable {
     private String email;
     private String adress;
 
+    //Getters & Setters
     public Long getId() {
         return id;
     }

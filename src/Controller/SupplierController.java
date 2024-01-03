@@ -16,18 +16,22 @@ public class SupplierController {
 
     public void userChose(){
         Scanner scanner = new Scanner(System.in);
+
         boolean isContinue = true;
 
         while (isContinue) {
+            System.out.println();
+            System.out.println("------------------------");
+            System.out.println("1. Add Supplier");
+            System.out.println("2. Display All Suppliers");
+            System.out.println("3. Display specific Supplier");
+            System.out.println("4. Update Supplier");
+            System.out.println("5. Delete Supplier");
+            System.out.println("0. Exit");
+            System.out.println("------------------------");
+            System.out.println();
 
-            System.out.println("1. Ajouter un fournisseur");
-            System.out.println("2. Afficher la liste des fournisseurs");
-            System.out.println("3. Afficher un fournisseur");
-            System.out.println("4. Mettre à jour un fournisseur");
-            System.out.println("5. Supprimer un fournisseur");
-            System.out.println("0. Quitter");
-
-            System.out.print("Choix : ");
+            System.out.print("Selection : ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -49,30 +53,43 @@ public class SupplierController {
                     deleteSupplier(scanner);
                     break;
                 case 0:
-                    System.out.println("Fin du programme.");
+                    System.out.println("Exit Menu.");
                     isContinue = false;
-                    break;
                 default:
-                    System.out.println("Choix invalide. Veuillez réessayer.");
+                    System.out.println("Invalid selection: try again!");
             }
         }
       }
 
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour valider l'e-mail
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+
     private void addSupplier(Scanner scanner) {
-        System.out.println("Ajouter un fournisseur :");
+        System.out.println("Add Supplier :");
         System.out.println("------------------------");
 
-        System.out.print("Numéro du fournisseur : ");
+        System.out.print("Supplier Number: ");
         int supplierNumber = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Nom du fournisseur : ");
+        System.out.print("Supplier Name : ");
         String name = scanner.nextLine();
 
-        System.out.print("Email du fournisseur : ");
-        String email = scanner.nextLine();
+        // Validation de l'e-mail
+        String email;
+        do {
+            System.out.print("Supplier Email : ");
+            email = scanner.nextLine();
 
-        System.out.print("Adresse du fournisseur : ");
+            if (!isValidEmail(email)) {
+                System.out.println("Email adress invalid. Please retry.");
+            }
+        } while (!isValidEmail(email));
+
+        System.out.print("Supplier Adress : ");
         String address = scanner.nextLine();
 
         // Créer l'objet Fournisseur
@@ -85,26 +102,26 @@ public class SupplierController {
         // Appeler la méthode addSupplier pour ajouter un fournisseur
         supplierService.addSupplier(newSupplier);
 
-        System.out.println("Fournisseur ajouté avec succès.");
+        System.out.println("Supplier successfully added");
     }
 
 
     private void getAllSuppliers() {
-        System.out.println("Liste des fournisseurs :");
+        System.out.println("Suppliers List :");
 
         // Appeler la méthode getAllSuppliers
         List<Supplier> suppliers = supplierService.getAllSuppliers();
 
         //si aucun fournisseur trouvé affichage (Aucun fournisseur trouvé)
         if (suppliers.isEmpty()) {
-            System.out.println("Aucun fournisseur trouvé.");
+            System.out.println("No supplier found");
         } else {
             for (Supplier supplier : suppliers) {
                 System.out.println("ID : " + supplier.getId());
-                System.out.println("Numéro : " + supplier.getSupplierNb());
-                System.out.println("Nom : " + supplier.getName());
+                System.out.println("Number : " + supplier.getSupplierNb());
+                System.out.println("Name : " + supplier.getName());
                 System.out.println("Email : " + supplier.getEmail());
-                System.out.println("Adresse : " + supplier.getAdress());
+                System.out.println("Adress : " + supplier.getAdress());
                 System.out.println("------------------------");
             }
         }
@@ -113,7 +130,7 @@ public class SupplierController {
 
     private void getSupplierById(Scanner scanner) {
 
-        System.out.print("Entrez l'ID du fournisseur : ");
+        System.out.print("Enter Supplier ID : ");
         //recupération de lid du fournisseur
         long supplierId = scanner.nextLong();
         scanner.nextLine();
@@ -123,22 +140,22 @@ public class SupplierController {
 
        //vérification de l'id
         if (supplier != null) {
-            System.out.println("Détails du fournisseur :");
+            System.out.println("Supplier details :");
             System.out.println("ID : " + supplier.getId());
-            System.out.println("Numéro : " + supplier.getSupplierNb());
-            System.out.println("Nom : " + supplier.getName());
+            System.out.println("Number : " + supplier.getSupplierNb());
+            System.out.println("Name : " + supplier.getName());
             System.out.println("Email : " + supplier.getEmail());
-            System.out.println("Adresse : " + supplier.getAdress());
+            System.out.println("Adress : " + supplier.getAdress());
         } else {
-            System.out.println("Aucun fournisseur trouvé avec l'ID " + supplierId);
+            System.out.println("No supplier found with ID " + supplierId);
         }
     }
 
 
     private void updateSupplier(Scanner scanner) {
-        System.out.println("Mettre à jour un fournisseur :");
+        System.out.println("Update Supplier :");
 
-        System.out.print("Entrez l'ID du fournisseur à mettre à jour : ");
+        System.out.print("Enter supplier ID : ");
         //recupération de lid du fournisseur
         long supplierId = scanner.nextLong();
         scanner.nextLine();
@@ -147,19 +164,19 @@ public class SupplierController {
         Supplier existingSupplier = supplierService.getSupplierById(supplierId);
 
         if (existingSupplier != null) {
-            System.out.println("Saisissez les nouvelles données du fournisseur :");
+            System.out.println("Enter Supplier's new data :");
 
-            System.out.print("Nouveau numéro du fournisseur : ");
+            System.out.print("New Supplier Number: ");
             int newSupplierNumber = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.print("Nouveau nom du fournisseur : ");
+            System.out.print("New Supplier Name : ");
             String newName = scanner.nextLine();
 
-            System.out.print("Nouvel email du fournisseur : ");
+            System.out.print("New Supplier Email : ");
             String newEmail = scanner.nextLine();
 
-            System.out.print("Nouvelle adresse du fournisseur : ");
+            System.out.print("New Supplier Adress : ");
             String newAddress = scanner.nextLine();
 
             // Créer un objet Supplier avec les nouvelles données entré par l'utilisateur
@@ -173,17 +190,17 @@ public class SupplierController {
             // Appeler la méthode updateSupplier pour ajouter les modification du fournisseur
             supplierService.updateSupplier(updatedSupplier);
 
-            System.out.println("Fournisseur mis à jour avec succès.");
+            System.out.println("Supplier successfully updated");
         } else {
-            System.out.println("Aucun fournisseur trouvé avec l'ID " + supplierId);
+            System.out.println("No supplier found with ID " + supplierId);
         }
     }
 
 
     private void deleteSupplier(Scanner scanner) {
-        System.out.println("Supprimer un fournisseur :");
+        System.out.println("Delete Supplier :");
 
-        System.out.print("Entrez l'ID du fournisseur à supprimer : ");
+        System.out.print("Enter Supplier ID : ");
         long supplierId = scanner.nextLong();
         scanner.nextLine();
 
@@ -194,9 +211,9 @@ public class SupplierController {
             // Appeler la méthode deleteSupplier pour supprimer
             supplierService.deleteSupplier(supplierId);
 
-            System.out.println("Fournisseur supprimé avec succès.");
+            System.out.println("Supplier successfully deleted");
         } else {
-            System.out.println("Aucun fournisseur trouvé avec l'ID " + supplierId);
+            System.out.println("No supplier found with ID " + supplierId);
         }
     }
 

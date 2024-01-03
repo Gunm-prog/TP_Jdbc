@@ -38,8 +38,8 @@ public class MainController {
     }
     
     public static void select(){
-        try{
-            while (run) {
+        while (run) {
+            try{
                 System.out.println();
                 System.out.println("----------------");
                 System.out.println("1. Items");
@@ -74,10 +74,12 @@ public class MainController {
                     default:
                         System.out.println("Choix invalide. Veuillez réessayer.");
                 }
-            }
-        }catch(Exception e){
-            System.out.println(e);
-        } 
+            }catch(Exception e){
+                System.out.println(e);
+                scanner.nextLine(); 
+            } 
+        }
+        
     }
     
 }

@@ -1,5 +1,7 @@
 package Controller;
 
+import Dao.ItemDao;
+import Dao.UserDao;
 import Service.ConnexionService;
 import Controller.SupplierController;
 import Service_Impl.SupplierServiceImpl;
@@ -32,9 +34,9 @@ public class MainController {
             databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
 
             clientController = new ClientController(new ClientServiceImpl(databaseConnection));
-            //itemController = new ItemController(new ItemServiceImpl(databaseConnection));
+            itemController = new ItemController(new ItemServiceImpl(new ItemDao(databaseConnection)));
             supplierController = new SupplierController(new SupplierServiceImpl(databaseConnection));
-            //userController = new UserController(new UserServiceImpl(databaseConnection));
+            userController = new UserController(new UserServiceImpl(new UserDao(databaseConnection)));
         }catch(Exception e){
             System.out.println(e);
         }
@@ -60,7 +62,7 @@ public class MainController {
 
                 switch (choice) {
                     case 1:
-                        //itemController.userChoice();
+                        itemController.select();
                         break;
                     case 2:
                         clientController.userChoice();
@@ -69,14 +71,14 @@ public class MainController {
                         supplierController.userChose();
                         break;
                     case 4:
-                        //userController.userChoice();
+                        userController.select();
                         break;
                     case 0:
                         System.out.println("Retour au menu principal.");
                         run = false;
                         break;
                     default:
-                        System.out.println("Choix invalide. Veuillez réessayer.");
+                        System.out.println("Choix invalide. Veuillez rï¿½essayer.");
                 }
             }
         }catch(Exception e){

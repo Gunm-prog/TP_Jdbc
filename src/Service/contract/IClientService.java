@@ -1,4 +1,4 @@
-package Service;
+package Service.contract;
 
 import Entity.Client;
 

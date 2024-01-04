@@ -1,7 +1,7 @@
 package Service.impl;
 
 import Dao.ClientDao;
-import Service.IClientService;
+import Service.contract.IClientService;
 import Entity.Client;
 import java.sql.Connection;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class ClientServiceImpl implements IClientService{
     private final ClientDao clientDao;
     
-    //Le constructeur initialise le clientDao avec la connexion à la base de données qui est en paramètres
+    //Le constructeur initialise le clientDao avec la connexion ï¿½ la base de donnï¿½es qui est en paramï¿½tres
     public ClientServiceImpl(Connection databaseConnection){
         this.clientDao = new ClientDao(databaseConnection);
     }

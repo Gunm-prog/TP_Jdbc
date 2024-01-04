@@ -58,7 +58,7 @@ public class UserController {
                 case 0:
                     System.out.println("Exit Menu");
                     isContinue = false;
-                 //   System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid selection: try again!");
             }

@@ -1,4 +1,4 @@
-package Service_Impl;
+package Service.impl;
 
 import Dao.SupplierDAO;
 import Entity.Supplier;
@@ -38,6 +38,12 @@ public class SupplierServiceImpl implements ISupplierService {
     @Override
     public void deleteSupplier(Long id) {
         supplierDAO.deleteSupplier(id);
+    }
+
+    @Override
+    public boolean isSupplierNumberExists(int supplierNumber) {
+        // Implémentation pour vérifier si le numéro du fournisseur existe déjà
+        return supplierDAO.isSupplierNumberExists(supplierNumber);
     }
 
 }

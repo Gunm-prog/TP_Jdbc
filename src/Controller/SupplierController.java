@@ -71,39 +71,88 @@ public class SupplierController {
         System.out.println("Add Supplier :");
         System.out.println("------------------------");
 
-        System.out.print("Supplier Number: ");
-        int supplierNumber = scanner.nextInt();
-        scanner.nextLine();
+        // Demander à l'utilisateur de remplir les données jusqu'à ce qu'elles soient toutes valides
+        while (true) {
+            // Saisie du numéro du fournisseur
+            System.out.print("Supplier Number: ");
+            String supplierNumberInput = scanner.nextLine();
 
-        System.out.print("Supplier Name : ");
-        String name = scanner.nextLine();
-
-        // Validation de l'e-mail
-        String email;
-        do {
-            System.out.print("Supplier Email : ");
-            email = scanner.nextLine();
-
-            if (!isValidEmail(email)) {
-                System.out.println("Email adress invalid. Please retry.");
+            if (supplierNumberInput.isEmpty()) {
+                System.out.println("Please enter Supplier Number.");
+                continue;
             }
-        } while (!isValidEmail(email));
 
-        System.out.print("Supplier Adress : ");
-        String address = scanner.nextLine();
+            // Vérification si le numéro du fournisseur existe déjà
+            int supplierNumber;
+            try {
+                supplierNumber = Integer.parseInt(supplierNumberInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Supplier Number. Please enter a valid number.");
+                continue;
+            }
 
-        // Créer l'objet Fournisseur
-        Supplier newSupplier = new Supplier();
-        newSupplier.setSupplierNb(supplierNumber);
-        newSupplier.setName(name);
-        newSupplier.setEmail(email);
-        newSupplier.setAdress(address);
+            if (supplierService.isSupplierNumberExists(supplierNumber)) {
+                System.out.println("Supplier Number already exists. Please choose a different number.");
+                return; // Sortez de la méthode si le numéro existe déjà
+            }
 
-        // Appeler la méthode addSupplier pour ajouter un fournisseur
-        supplierService.addSupplier(newSupplier);
+            // Saisie du nom du fournisseur
+            String name;
+            do {
+                System.out.print("Supplier Name : ");
+                name = scanner.nextLine();
 
-        System.out.println("Supplier successfully added");
+                if (name.isEmpty()) {
+                    System.out.println("Please enter Supplier Name.");
+                } else if (!name.matches("[a-zA-z]+")) {
+                    System.out.println("Retry, with only letters please.");
+                    name="";
+                }
+            } while (name.isEmpty());
+
+
+            // Saisie de l'e-mail du fournisseur
+            String email;
+            do {
+                System.out.print("Supplier Email : ");
+                email = scanner.nextLine();
+
+                if (email.isEmpty()) {
+                    System.out.println("Please enter Supplier Email.");
+                }
+
+                if (!isValidEmail(email)) {
+                    System.out.println("Email address invalid. Please retry.");
+                }
+            } while (!isValidEmail(email));
+
+            // Saisie de l'adresse du fournisseur
+
+            String address;
+            do {
+                System.out.print("Supplier Address : ");
+                 address = scanner.nextLine();
+
+                if (address.isEmpty()){
+            }
+                System.out.println("Please enter Supplier Address. ");
+            }while (address.isEmpty());
+
+            // Créer l'objet Fournisseur
+            Supplier newSupplier = new Supplier();
+            newSupplier.setSupplierNb(supplierNumber);
+            newSupplier.setName(name);
+            newSupplier.setEmail(email);
+            newSupplier.setAdress(address);
+
+            // Appeler la méthode addSupplier pour ajouter un fournisseur
+            supplierService.addSupplier(newSupplier);
+
+            System.out.println("Supplier successfully added");
+            break; // Sortir de la boucle une fois que toutes les données sont valides
+        }
     }
+
 
 
     private void getAllSuppliers() {
@@ -157,8 +206,24 @@ public class SupplierController {
 
         System.out.print("Enter supplier ID : ");
         //recupération de lid du fournisseur
-        long supplierId = scanner.nextLong();
-        scanner.nextLine();
+        long supplierId = -1;
+
+        // Demander à l'utilisateur de remplir l'ID jusqu'à ce qu'il soit valide
+        while (true) {
+            String supplierIdInput = scanner.nextLine();
+
+            if (supplierIdInput.isEmpty()) {
+                System.out.println("Please enter Supplier ID.");
+                continue;
+            }
+
+            try {
+                supplierId = Long.parseLong(supplierIdInput);
+                break; // Sortir de la boucle si l'ID est valide
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Supplier ID. Please enter a valid number.");
+            }
+        }
 
         // Vérifier si le fournisseur existe
         Supplier existingSupplier = supplierService.getSupplierById(supplierId);
@@ -166,20 +231,71 @@ public class SupplierController {
         if (existingSupplier != null) {
             System.out.println("Enter Supplier's new data :");
 
-            System.out.print("New Supplier Number: ");
-            int newSupplierNumber = scanner.nextInt();
-            scanner.nextLine();
+            // Récupérer le numéro du fournisseur existant
+            int existingSupplierNumber = existingSupplier.getSupplierNb();
 
-            System.out.print("New Supplier Name : ");
-            String newName = scanner.nextLine();
+            // Saisir le nouveau numéro du fournisseur
+            int newSupplierNumber = -1; // Initialiser avec une valeur par défaut
+            do {
+                System.out.print("New Supplier Number: ");
+                String newSupplierNumberInput = scanner.nextLine();
 
-            System.out.print("New Supplier Email : ");
-            String newEmail = scanner.nextLine();
+                if (newSupplierNumberInput.isEmpty()) {
+                    System.out.println("Please enter New Supplier Number.");
+                    continue;
+                }
 
-            System.out.print("New Supplier Adress : ");
-            String newAddress = scanner.nextLine();
+                newSupplierNumber = Integer.parseInt(newSupplierNumberInput);
 
-            // Créer un objet Supplier avec les nouvelles données entré par l'utilisateur
+                // Vérifier si le nouveau numéro est déjà utilisé
+                if (supplierService.isSupplierNumberExists(newSupplierNumber) && newSupplierNumber != existingSupplierNumber) {
+                    System.out.println("Supplier Number already exists. Please choose a different number.");
+                }
+            } while (supplierService.isSupplierNumberExists(newSupplierNumber) && newSupplierNumber != existingSupplierNumber);
+
+
+
+
+            String newName;
+            do {
+                System.out.print("New Supplier Name : ");
+                newName = scanner.nextLine();
+
+                if (newName.isEmpty()){
+                    System.out.println("Please enter new name");
+                }
+
+            }while (newName.isEmpty());
+
+            // Validation de l'e-mail
+            String newEmail;
+            do {
+                System.out.print("New Supplier Email : ");
+                newEmail = scanner.nextLine();
+
+                if (newEmail.isEmpty()) {
+                    System.out.println("Please enter New Supplier Email.");
+                    continue;
+                }
+
+                if (!isValidEmail(newEmail)) {
+                    System.out.println("Email address invalid. Please retry.");
+                }
+            } while (!isValidEmail(newEmail));
+
+
+            String newAddress;
+            do {
+                System.out.print("New Supplier Address : ");
+                newAddress = scanner.nextLine();
+
+                if (newAddress.isEmpty()){
+                }
+                System.out.println("Please enter New Supplier Address. ");
+            }while (newAddress.isEmpty());
+
+
+            // Créer un objet Supplier avec les nouvelles données entrées par l'utilisateur
             Supplier updatedSupplier = new Supplier();
             updatedSupplier.setId(supplierId);
             updatedSupplier.setSupplierNb(newSupplierNumber);
@@ -187,7 +303,7 @@ public class SupplierController {
             updatedSupplier.setEmail(newEmail);
             updatedSupplier.setAdress(newAddress);
 
-            // Appeler la méthode updateSupplier pour ajouter les modification du fournisseur
+            // Appeler la méthode updateSupplier pour ajouter les modifications du fournisseur
             supplierService.updateSupplier(updatedSupplier);
 
             System.out.println("Supplier successfully updated");
@@ -197,21 +313,54 @@ public class SupplierController {
     }
 
 
+
+
     private void deleteSupplier(Scanner scanner) {
         System.out.println("Delete Supplier :");
 
         System.out.print("Enter Supplier ID : ");
-        long supplierId = scanner.nextLong();
-        scanner.nextLine();
+        long supplierId = -1;
+
+        // Demander à l'utilisateur de remplir l'ID jusqu'à ce qu'il soit valide
+        while (true) {
+            String supplierIdInput = scanner.nextLine();
+
+            if (supplierIdInput.isEmpty()) {
+                System.out.println("Please enter Supplier ID.");
+                continue;
+            }
+
+            try {
+                supplierId = Long.parseLong(supplierIdInput);
+                break; // Sortir de la boucle si l'ID est valide
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Supplier ID. Please enter a valid number.");
+            }
+        }
 
         // Appeler la méthode getSupplierById pour vérifier si le fournisseur existe
         Supplier existingSupplier = supplierService.getSupplierById(supplierId);
 
         if (existingSupplier != null) {
-            // Appeler la méthode deleteSupplier pour supprimer
-            supplierService.deleteSupplier(supplierId);
+            // Afficher les détails du fournisseur
+            System.out.println("Supplier details:");
+            System.out.println("ID: " + existingSupplier.getId());
+            System.out.println("Number: " + existingSupplier.getSupplierNb());
+            System.out.println("Name: " + existingSupplier.getName());
+            System.out.println("Email: " + existingSupplier.getEmail());
+            System.out.println("Address: " + existingSupplier.getAdress());
 
-            System.out.println("Supplier successfully deleted");
+            // Demander confirmation à l'utilisateur
+            System.out.print("Are you sure you want to delete this supplier? (yes/no): ");
+            String confirmation = scanner.nextLine().toLowerCase();
+
+            if (confirmation.equals("yes")) {
+                // Appeler la méthode deleteSupplier pour supprimer
+                supplierService.deleteSupplier(supplierId);
+                System.out.println("Supplier successfully deleted");
+            } else {
+                System.out.println("Deletion canceled. Supplier not deleted.");
+            }
         } else {
             System.out.println("No supplier found with ID " + supplierId);
         }

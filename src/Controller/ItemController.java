@@ -26,6 +26,7 @@ public class ItemController {
 
         while(isContinue) {
             System.out.println();
+            System.out.println("   ITEM MANAGEMENT  :");
             System.out.println("------------------------");
             System.out.println("1. Add item");
             System.out.println("2. Display item list");
@@ -54,17 +55,6 @@ public class ItemController {
                 default -> System.out.println("Invalid selection: try again!");
             }
         }
-    }
-
-    /**
-     * check with reggex the mail format
-     * @param email
-     * @return true if ok, else false
-     */
-    private boolean isValidEmail(String email) {
-        // Expression régulière pour valider l'e-mail
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return email.matches(emailRegex);
     }
 
     /**
@@ -137,9 +127,6 @@ public class ItemController {
         System.out.println("------------------------------");
 
         Long id = (long) makeControlledIntInput(scanner, "Enter item's id to delete: ");
-        /*System.out.print("Enter user's id to delete : ");
-        Long id = scanner.nextLong();
-        scanner.nextLine()*/;
 
         //Calling getById method to get a specific item thanks to its id
         Item item = itemService.getById(id);

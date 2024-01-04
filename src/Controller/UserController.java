@@ -26,6 +26,7 @@ public class UserController {
 
         while(isContinue) {
             System.out.println();
+            System.out.println("   USER MANAGEMENT  :");
             System.out.println("------------------------");
             System.out.println("1. Add user");
             System.out.println("2. Display user's list");

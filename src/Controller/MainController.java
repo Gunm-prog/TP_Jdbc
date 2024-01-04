@@ -1,22 +1,17 @@
 package TpJDBC.src.Controller;
 
-import TpJDBC.src.Service.ConnexionService;
-import TpJDBC.src.Controller.SupplierController;
 import TpJDBC.src.Service.impl.SupplierServiceImpl;
-import TpJDBC.src.Controller.ItemController;
 import TpJDBC.src.Service.impl.ItemServiceImpl;
-import TpJDBC.src.Controller.UserController;
 import TpJDBC.src.Dao.ItemDao;
 import TpJDBC.src.Dao.UserDao;
 import TpJDBC.src.Service.impl.UserServiceImpl;
 import TpJDBC.src.Service.ConnexionService;
 import TpJDBC.src.Service.impl.ClientServiceImpl;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MainController {
-    private static Scanner scanner = new Scanner(System.in); 
+    private static final Scanner scanner = new Scanner(System.in); 
     private static boolean run = true;
     private static ClientController clientController;
     private static ItemController itemController;
@@ -32,7 +27,7 @@ public class MainController {
             itemController = new ItemController(new ItemServiceImpl(new ItemDao(connexionService.getDatabaseConnection())));
             supplierController = new SupplierController(new SupplierServiceImpl(connexionService.getDatabaseConnection()));
             userController = new UserController(new UserServiceImpl(new UserDao(connexionService.getDatabaseConnection())));
-        }catch(Exception e){
+        }catch(SQLException e){
             System.out.println(e);
         }
     }
@@ -55,24 +50,15 @@ public class MainController {
                 scanner.nextLine();
 
                 switch (choice) {
-                    case 1:
-                        itemController.select();
-                        break;
-                    case 2:
-                        clientController.userChoice();
-                        break;
-                    case 3:
-                        supplierController.userChose();
-                        break;
-                    case 4:
-                        userController.select();
-                        break;
-                    case 0:
+                    case 1 -> itemController.select();
+                    case 2 -> clientController.userChoice();
+                    case 3 -> supplierController.userChose();
+                    case 4 -> userController.select();
+                    case 0 -> {
                         System.out.println("Retour au menu principal.");
                         run = false;
-                        break;
-                    default:
-                        System.out.println("Choix invalide. Veuillez réessayer.");
+                    }
+                    default -> System.out.println("Choix invalide. Veuillez réessayer.");
                 }
             }catch(Exception e){
                 System.out.println(e);

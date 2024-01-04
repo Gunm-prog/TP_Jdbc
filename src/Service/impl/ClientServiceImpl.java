@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.util.List;
 
 public class ClientServiceImpl implements IClientService{
-    private Connection databaseConnection;
-
     private final ClientDao clientDao;
     
     //Le constructeur initialise le clientDao avec la connexion à la base de données qui est en paramètres

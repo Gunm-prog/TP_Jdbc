@@ -56,7 +56,7 @@ public class ConnexionService {
             
             System.out.println("Creation de la BDD...");
             statement.executeUpdate(createDatabase);
-            System.out.println("Base de donnÃ©e crÃ©e avec succÃ¨s");
+            System.out.println("Base de donnée créée avec succès");
             System.out.println();
 
             System.out.println("Utilisation de la BDD...");
@@ -68,7 +68,7 @@ public class ConnexionService {
             statement.executeUpdate(createTableClient);
             statement.executeUpdate(createTableSupplier);
             statement.executeUpdate(createTableItem);
-            System.out.println("Tables crÃ©es avec succÃ¨s");
+            System.out.println("Tables créées avec succès");
             System.out.println();
         }catch(ClassNotFoundException | SQLException e){
             System.out.println(e);
@@ -77,9 +77,9 @@ public class ConnexionService {
 
     public void deleteDatabase(){
         try{
-            System.out.println("Suppression de la base de donnÃ©es...");
+            System.out.println("Suppression de la base de données...");
             statement.executeUpdate(dropDatabase);
-            System.out.println("Base de donnÃ©es supprimÃ©e avec succÃ¨s");
+            System.out.println("Base de données supprimée avec succès");
             System.out.println();
         }catch(SQLException e){
             System.out.println(e);

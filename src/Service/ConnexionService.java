@@ -59,6 +59,7 @@ public class ConnexionService {
 
     public ConnexionService() throws SQLException {
 
+        //on parcours les properties chargées pour les placer dans les attributs properties
         Properties properties = getDbProperties();
         JdbcDriver = properties.getProperty("jdbc.driver.class");
         URL = properties.getProperty("jdbc.url");
@@ -100,21 +101,21 @@ public class ConnexionService {
 
             statement = databaseConnection.createStatement();
             
-            System.out.println("Creation de la BDD...");
+            System.out.println("Database creation...");
             statement.executeUpdate(createDatabase);
-            System.out.println("Base de donnée crée avec succès");
+            System.out.println("Database successfully created");
             System.out.println();
 
-            System.out.println("Utilisation de la BDD...");
+            System.out.println("Use of database...");
             statement.executeUpdate(useDatabase);
             System.out.println();
 
-            System.out.println("Creation des tables ...");
+            System.out.println("Tables creation ...");
             statement.executeUpdate(createTableUser);
             statement.executeUpdate(createTableClient);
             statement.executeUpdate(createTableSupplier);
             statement.executeUpdate(createTableItem);
-            System.out.println("Tables crées avec succès");
+            System.out.println("Tables successfully created");
             System.out.println();
 
             Arrays.stream(args).forEach(arg -> {
@@ -130,9 +131,9 @@ public class ConnexionService {
 
     public void deleteDatabase(){
         try{
-            System.out.println("Suppression de la base de données...");
+            System.out.println("Delete database...");
             statement.executeUpdate(dropDatabase);
-            System.out.println("Base de données supprimée avec succès");
+            System.out.println("Database successfully deleted");
             System.out.println();
         }catch(SQLException e){
             System.out.println(e);
@@ -145,6 +146,7 @@ public class ConnexionService {
      */
     private static Properties getDbProperties() {
         Properties properties = new Properties();
+        //FileInputStream object for reading the file
         try (FileInputStream fis = new FileInputStream("db.properties")){
             properties.load(fis);
         } catch (Exception e) {

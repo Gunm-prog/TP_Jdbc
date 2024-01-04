@@ -22,7 +22,9 @@ public class MainController {
 
     public static void init(String[] args) {
         try {
+            //Creation objet ConnexionService
             ConnexionService connexionService = new ConnexionService();
+            //appel méthode qui crée la bdd et les tables et éventuellement injecter les données avec le dataset
             connexionService.initDatabase(args);
 
             Class.forName(ConnexionService.JdbcDriver);
@@ -30,9 +32,12 @@ public class MainController {
             Connection databaseConnection;
 
             //    databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306?useSSL=false", "root", "");
+
+            //on demande au ConnectionService de nous donner la connexion à la bdd
             databaseConnection = connexionService.getDatabaseConnection();
 
-
+            //Pour chaque controller on va les instancier et ont leurs donnent ce dont ils ont besoin
+            //les services respectifs qui eux-meme ont besoin de la connexion à la bdd
             clientController = new ClientController(new ClientServiceImpl(databaseConnection));
             itemController = new ItemController(new ItemServiceImpl(new ItemDao(databaseConnection)));
             supplierController = new SupplierController(new SupplierServiceImpl(databaseConnection));

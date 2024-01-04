@@ -113,6 +113,7 @@ public class UserDao {
     }
 
     //Conversion method mapping request's result to a User object
+    //It converts datas from db into a User object
     private User mapResultSetToUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getLong("id"));
@@ -125,6 +126,7 @@ public class UserDao {
         return user;
     }
 
+    //Pour chaque userdata on lance une requete et on gere les erreurs pour chacune d'entre-elles
     public void loadUserDataSet() throws RuntimeException {
         List.of(
                 new User(48562, "Dylan", "Bob", "bob@dylan.gmail", "bobyD", "bob123"),

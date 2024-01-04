@@ -85,20 +85,12 @@ public class UserController {
         String lastname = scanner.nextLine();*/
 
         String firstname = makeControlledStringInput(scanner, "User's firstname: ", 255);
-        /*System.out.println("User's firstname: ");
-        String firstname = scanner.nextLine();*/
 
         String email = makeControlledStringInput(scanner, "User's email: ", 255);
-        /*System.out.println("User's email: ");
-        String email = scanner.nextLine();*/
 
         String login = makeControlledStringInput(scanner, "User's pseudo: ", 255);
-       /* System.out.println("User's pseudo: ");
-        String login = scanner.nextLine();*/
 
         String password = makeControlledStringInput(scanner, "User's password: ", 255);
-        /*System.out.println("User's password: ");
-        String password = scanner.nextLine();*/
 
         //Creation of Object User
         User newUser = new User();
@@ -194,24 +186,15 @@ public class UserController {
             scanner.nextLine();*/
 
             String newLastname = makeControlledStringInput(scanner, "User's lastname: ", 255);
-            /*System.out.println("User's lastname: ");
-            String newLastname = scanner.nextLine();*/
 
             String newFirstname = makeControlledStringInput(scanner, "User's firstname: ", 255);
-            /*System.out.println("User's firstname: ");
-            String newFirstname = scanner.nextLine();*/
 
             String newEmail = makeControlledStringInput(scanner, "User's email: ", 255);
-            /*System.out.println("User's email: ");
-            String newEmail = scanner.nextLine();*/
 
             String newLogin = makeControlledStringInput(scanner, "User's pseudo: ", 255);
-            /*System.out.println("User's pseudo: ");
-            String newLogin = scanner.nextLine();*/
 
             String newPassword = makeControlledStringInput(scanner, "User's password: ", 255);
-            /*System.out.println("User's password: ");
-            String newPassword = scanner.nextLine();*/
+            
 
             //Updating Object user with new datas entered by user
             User updatedUser = new User();
@@ -236,9 +219,6 @@ public class UserController {
         System.out.println("Delete user :");
 
         Long id = (long) makeControlledIntInput(scanner, "Enter user's id to delete: ");
-        /*System.out.print("Enter user's id to delete : ");
-        Long id = scanner.nextLong();
-        scanner.nextLine()*/;
 
         // Calling getById method to check if user exists
         User existingUser = userService.getById(id);
@@ -255,7 +235,7 @@ public class UserController {
 
     /**
      * method allowing to ask something via Scanner and controlling String validity (we ask for a String there)
-     * String is valid if it is not null or empty or superior to maxLength (due to the nb put in the VARCHAR)
+     * String is valid if it is not null or empty or not superior to maxLength (due to the nb put in the VARCHAR)
      * While String is not valid, the loop goes on
      *
      * @param scanner Scanner Object with System.in parameter
@@ -280,7 +260,7 @@ public class UserController {
     }
 
     /**
-     * Method controlling that the value entered is a numeric one
+     * Method controlling that the value entered is a numerical one
      * @param scanner Scanner Object with System.in parameter
      * @param question asked for an int
      * @return the valid answer as an int

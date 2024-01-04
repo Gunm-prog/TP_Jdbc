@@ -16,6 +16,9 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    /**
+     * Displays the menu for the item table, and calls the methods for each action corresponding to the user’s choice
+     */
     public void select() {
         Scanner scanner = new Scanner(System.in);
 
@@ -53,30 +56,33 @@ public class ItemController {
         }
     }
 
+    /**
+     * check with reggex the mail format
+     * @param email
+     * @return true if ok, else false
+     */
     private boolean isValidEmail(String email) {
         // Expression régulière pour valider l'e-mail
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
 
+    /**
+     * Asks questions to create a new item and create it in the database
+     * @param scanner with system.in
+     */
     private void addItem (Scanner scanner) {
         System.out.println("Add item: ");
         System.out.println("------------------------------");
 
         int number = makeControlledIntInput(scanner, "Item Number: ");
-        /*System.out.println("Item Number: ");
-        int number = scanner.nextInt();*/
 
         System.out.println("Item Status: ");
         String status = getStatusChoice( scanner );
 
         String name = makeControlledStringInput(scanner, "Item Name: ", 255);
-        /*System.out.println("Item's name: ");
-        String name = scanner.nextLine();*/
 
         String description = makeControlledStringInput(scanner, "Item Description: ", 255);
-        /*System.out.println("Item's description: ");
-        String description = scanner.nextLine();*/
 
 
         //Creation of Object Item
@@ -96,9 +102,12 @@ public class ItemController {
         }
     }
 
-
+    /**
+     * Displays all items that can be found in the database
+     */
     private void findAll() {
         System.out.println("Item List: ");
+        System.out.println("------------------------------");
 
         //Calling findAll method
         List<Item> items = itemService.findAll();
@@ -119,7 +128,13 @@ public class ItemController {
     }
 
 
+    /**
+     * Ask for an id, try to find the article with its id for display
+     * @param scanner with system.in
+     */
     private void getById(Scanner scanner) {
+        System.out.println("Item by id: ");
+        System.out.println("------------------------------");
 
         Long id = (long) makeControlledIntInput(scanner, "Enter item's id to delete: ");
         /*System.out.print("Enter user's id to delete : ");
@@ -142,14 +157,16 @@ public class ItemController {
         }
     }
 
+    /**
+     * Ask for an identifier, try to find the item with its identifier and then ask for each attribute a new value avent to update the item in the database
+     * @param scanner with system.in
+     */
     private void updateItem (Scanner scanner) {
         System.out.println("Update item: ");
+        System.out.println("------------------------------");
 
 
         Long id = (long) makeControlledIntInput(scanner, "Enter item's id to delete: ");
-        /*System.out.print("Enter user's id to delete : ");
-        Long id = scanner.nextLong();
-        scanner.nextLine()*/;
 
         //Check if item exists
         Item existingItem = itemService.getById(id);
@@ -158,19 +175,12 @@ public class ItemController {
             System.out.println("Enter item's new datas: ");
 
             int newNumber = makeControlledIntInput(scanner, "Item's number: ");
-            /*System.out.println("Item's number: ");
-            int newNumber = scanner.nextInt();
-            */
+
             String newStatus = getStatusChoice( scanner );
 
             String newName = makeControlledStringInput(scanner, "Item's name: ", 255);
-            /*System.out.println("Item's name: ");
-            String newName = scanner.nextLine();*/
 
             String newDescription = makeControlledStringInput(scanner, "Item's Description: ", 255);
-            /*System.out.println("Item's Description: ");
-            String newDescription = scanner.nextLine();
-*/
 
             //Updating Object item with new datas
             Item updatedItem = new Item();
@@ -189,13 +199,15 @@ public class ItemController {
         }
     }
 
+    /**
+     * Ask for an id, try to find item with its id and delete the item in database
+     * @param scanner with system.in
+     */
     private void deleteUser(Scanner scanner) {
         System.out.println("Delete item :");
+        System.out.println("------------------------------");
 
         Long id = (long) makeControlledIntInput(scanner, "Enter item's id to delete: ");
-        /*System.out.print("Enter user's id to delete : ");
-        Long id = scanner.nextLong();
-        scanner.nextLine()*/;
 
         // Calling getById method to check if item exists
         Item existingItem = itemService.getById(id);
@@ -210,6 +222,11 @@ public class ItemController {
         }
     }
 
+    /**
+     * Displays the choice between two status, and asks the user his choice
+     * @param scanner
+     * @return
+     */
     private String getStatusChoice(Scanner scanner){
         boolean isOk;
         int indexStatus;
@@ -223,11 +240,6 @@ public class ItemController {
             }
         } while( !isOk );
 
-       // int indexStatus = makeControlledIntInput(scanner, "Item status: [0] sold or [1] for sell");
-        /*System.out.println("Item status: [0] sold or [1] for sell ");
-        int indexStatus = scanner.nextInt();
-        scanner.nextLine();*/
-
         String newStatus;
         if (indexStatus == 0) {
             newStatus = String.valueOf(ItemStatus.sold);
@@ -237,6 +249,16 @@ public class ItemController {
         return newStatus;
     }
 
+    /**
+     * method allowing to ask something via Scanner and controlling String validity (we ask for a String there)
+     * String is valid if it is not null or empty or not superior to maxLength (due to the nb put in the VARCHAR)
+     * While String is not valid, the loop goes on
+     *
+     * @param scanner Scanner Object with System.in parameter
+     * @param question asked for a String
+     * @param maxLength allowed for answer
+     * @return the valid answer as a String
+     */
     private String makeControlledStringInput( Scanner scanner, String question, int maxLength ) {
         boolean isOk;
         String userInput;
@@ -254,7 +276,7 @@ public class ItemController {
     }
 
     /**
-     * Method controlling that the value entered is a numeric one
+     * Method controlling that the value entered is a numerical one
      * @param scanner Scanner Object with System.in parameter
      * @param question asked for an int
      * @return the valid answer as an int

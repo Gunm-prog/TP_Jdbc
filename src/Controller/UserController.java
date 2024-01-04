@@ -16,6 +16,9 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Displays the menu for the user table, and calls the methods for each action corresponding to the user’s choice
+     */
     public void select() {
         Scanner scanner = new Scanner(System.in);
 
@@ -65,28 +68,32 @@ public class UserController {
         }
     }
 
+    /**
+     * check with reggex the mail format
+     * @param email
+     * @return true if ok, else false
+     */
     private boolean isValidEmail(String email) {
         // Expression régulière pour valider l'e-mail
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
 
+    /**
+     * Asks questions to create a new user and create it in the database
+     * @param scanner with system.in
+     */
     private void addUser (Scanner scanner) {
         System.out.println("Add user: ");
         System.out.println("------------------------------");
 
         int employeeNb = makeControlledIntInput(scanner, "User Number: ");
-        /*System.out.println("User Number: ");
-        int employeeNb = scanner.nextInt();
-        scanner.nextLine();*/
 
         String lastname = makeControlledStringInput(scanner, "User's lastname: ", 255);
-        /*System.out.println("User's lastname: ");
-        String lastname = scanner.nextLine();*/
 
         String firstname = makeControlledStringInput(scanner, "User's firstname: ", 255);
 
-        String email = makeControlledStringInput(scanner, "User's email: ", 255);
+        String email = makeControlledEmailInput(scanner);
 
         String login = makeControlledStringInput(scanner, "User's pseudo: ", 255);
 
@@ -115,8 +122,12 @@ public class UserController {
     }
 
 
+    /**
+     * Displays all users that can be found in the database
+     */
     private void findAll() {
         System.out.println("Users' List: ");
+        System.out.println("------------------------------");
 
         //Calling findAll method
         List<User> users = userService.findAll();
@@ -139,7 +150,13 @@ public class UserController {
     }
 
 
+    /**
+     * Ask for an id, try to find the user with its id for display
+     * @param scanner with system.in
+     */
     private void getById(Scanner scanner) {
+        System.out.println("User by id: ");
+        System.out.println("------------------------------");
 
         Long id = (long) makeControlledIntInput(scanner, "Enter user's id: ");
         /*System.out.println("Enter user's id: ");
@@ -165,14 +182,15 @@ public class UserController {
         }
     }
 
+    /**
+     * Ask for an identifier, try to find the user with its identifier and then ask for each attribute a new value avent to update the user in the database
+     * @param scanner with system.in
+     */
     private void updateUser (Scanner scanner) {
         System.out.println("Update user: ");
+        System.out.println("------------------------------");
 
         Long id = (long) makeControlledIntInput(scanner, "Enter user's id to update: ");
-        /*System.out.println("Enter user's id to update: ");
-        //Get user's id
-        Long id = scanner.nextLong();
-        scanner.nextLine();*/
 
         //Check if user exists
         User existingUser = userService.getById(id);
@@ -189,7 +207,7 @@ public class UserController {
 
             String newFirstname = makeControlledStringInput(scanner, "User's firstname: ", 255);
 
-            String newEmail = makeControlledStringInput(scanner, "User's email: ", 255);
+            String newEmail = makeControlledEmailInput(scanner);;
 
             String newLogin = makeControlledStringInput(scanner, "User's pseudo: ", 255);
 
@@ -215,8 +233,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Ask for an id, try to find user with its id and delete the user in database
+     * @param scanner with system.in
+     */
     private void deleteUser(Scanner scanner) {
         System.out.println("Delete user :");
+        System.out.println("------------------------------");
 
         Long id = (long) makeControlledIntInput(scanner, "Enter user's id to delete: ");
 
@@ -282,5 +305,24 @@ public class UserController {
         return userInput;
     }
 
+    /**
+     * Method controlling that the value entered is a valid email
+     * @param scanner
+     * @return email as a String
+     */
+    private String makeControlledEmailInput(Scanner scanner){
+        boolean isOk;
+        String userInput;
+        do{
+            isOk = false;
+            userInput = makeControlledStringInput(scanner, "User's email: ", 255);
+            if( isValidEmail( userInput ) ){
+                isOk = true;
+            } else {
+                System.out.println( "Invalid input. \n Need a valid email." );
+            }
+        } while( !isOk );
 
+        return userInput;
+    }
 }

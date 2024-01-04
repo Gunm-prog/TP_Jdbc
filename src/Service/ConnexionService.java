@@ -155,11 +155,18 @@ public class ConnexionService {
         return properties;
     }
 
+    /**
+     * Gere l'injection en base de donnée pour chaque dao
+     * @param dbConnection
+     */
     public void loadDataset(Connection dbConnection) {
         System.out.println("Dataset injection...");
 
         UserDao userDao = new UserDao( dbConnection );
         userDao.loadUserDataSet();
+
+        //Ajout possible ici pour les Client et Item et Supllier DAO
+        // en leur ajoutant la méthode load___DataSet respectif sur le mmême schema que loadUserDataSet();
 
     }
 }

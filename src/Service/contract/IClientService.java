@@ -1,6 +1,6 @@
-package TpJDBC.src.Service;
+package Service;
 
-import TpJDBC.src.Entity.Client;
+import Entity.Client;
 
 import java.util.List;
 

@@ -1,14 +1,12 @@
 package Service.impl;
 
-import TpJDBC.src.Dao.ClientDao;
-import TpJDBC.src.Service.IClientService;
-import TpJDBC.src.Entity.Client;
+import Dao.ClientDao;
+import Service.IClientService;
+import Entity.Client;
 import java.sql.Connection;
 import java.util.List;
 
 public class ClientServiceImpl implements IClientService{
-    private Connection databaseConnection;
-
     private final ClientDao clientDao;
     
     //Le constructeur initialise le clientDao avec la connexion à la base de données qui est en paramètres

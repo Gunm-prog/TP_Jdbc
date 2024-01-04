@@ -1,4 +1,4 @@
-package TpJDBC.src.Entity;
+package Entity;
 
 import java.io.Serializable;
 

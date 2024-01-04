@@ -1,6 +1,6 @@
-package TpJDBC.src.Dao;
+package Dao;
 
-import TpJDBC.src.Entity.Client;
+import Entity.Client;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +19,6 @@ public class ClientDao {
     
     //Insert le client en paramètre dans la base de donnée
     public void create(Client client){
-        System.out.println("test");
         final String insert = "INSERT INTO Clients (number,lastName,firstName,email,adress)"
                 + " VALUES ("
                 + client.getClientNumber() + ", "
@@ -30,7 +29,6 @@ public class ClientDao {
         System.out.println(insert);
         try{
             statement = databaseConnection.createStatement();
-            statement.executeUpdate("use TpJDBC");
             statement.executeUpdate(insert);
         }catch(SQLException e){
             System.out.println(e);
@@ -43,7 +41,6 @@ public class ClientDao {
         try {
             String select = "SELECT * FROM Clients";
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(select);
-            preparedStatement.executeUpdate("use TpJDBC");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 clients.add(mapResultSetToClient(resultSet));
@@ -60,7 +57,6 @@ public class ClientDao {
         try {
             String select = "SELECT * FROM Clients WHERE id=?";
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(select);
-            preparedStatement.executeUpdate("use TpJDBC");
             preparedStatement.setLong(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -84,7 +80,6 @@ public class ClientDao {
                 + "WHERE id = " + "'" + client.getId() + "'";
         try{
             statement = databaseConnection.createStatement();
-            statement.executeUpdate("use TpJDBC");
             statement.executeUpdate(update);
         }catch(SQLException e){
             System.out.println(e);

@@ -1,7 +1,7 @@
 package Controller;
 
-import TpJDBC.src.Entity.Client;
-import TpJDBC.src.Service.IClientService;
+import Entity.Client;
+import Service.contract.IClientService;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,104 +19,124 @@ public class ClientController {
         boolean run = true;
 
         while (run) {
-            System.out.println();
-            System.out.println("------------------------");
-            System.out.println("1. Add Client");
-            System.out.println("2. Display all Clients");
-            System.out.println("3. Display specific Client");
-            System.out.println("4. Update Client");
-            System.out.println("5. Delete Client");
-            System.out.println("0. Exit");
-            System.out.println("------------------------");
-            System.out.println();
+            try{
+                System.out.println();
+                System.out.println("------------------------");
+                System.out.println("1. Add Client");
+                System.out.println("2. Display all Clients");
+                System.out.println("3. Display specific Client");
+                System.out.println("4. Update Client");
+                System.out.println("5. Delete Client");
+                System.out.println("0. Exit");
+                System.out.println("------------------------");
+                System.out.println();
 
-            System.out.print("Selection : ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+                System.out.print("Selection : ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    addClient(scanner);
-                    break;
-                case 2:
-                    getAllClients();
-                    break;
-                case 3:
-                    getClientById(scanner);
-                    break;
-                case 4:
-                    updateClient(scanner);
-                    break;
-                case 5:
-                    deleteClient(scanner);
-                    break;
-                case 0:
-                    System.out.println("Return to main menu.");
-                    run = false;
-                    break;
-                default:
-                    System.out.println("Wrong choice. Please retry.");
-            }
+                switch (choice) {
+                    case 1 -> addClient(scanner);
+                    case 2 -> getAllClients();
+                    case 3 -> getClientById(scanner);
+                    case 4 -> updateClient(scanner);
+                    case 5 -> deleteClient(scanner);
+                    case 0 -> {
+                        System.out.println("Return to main menu.");
+                        run = false;
+                    }
+                    default -> System.out.println("Wrong choice. Please retry.");
+                }
+            }catch(Exception e){
+                System.out.println(e);
+                System.out.println("Wrong choice. Please retry.");
+                scanner.nextLine(); 
+            } 
         }
     }
     
     private boolean isValidEmail(String email) {
-        // Expression rÃ©guliÃ¨re pour valider l'e-mail
+        // Regex pour valider l'e-mail
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
     
-    //Demande et rï¿½cupï¿½re les informations du client que l'on veut insï¿½rer en base de donnï¿½es
+    public static boolean isInteger(String strInt) {
+        if (strInt == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(strInt);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+    
+    //Demande et récupère les informations du client que l'on veut insérer en base de données
     private void addClient(Scanner scanner) {
-        System.out.println("Add Client :");
-        System.out.println("------------------------");
+        try{
+            System.out.println("Add Client :");
+            System.out.println("------------------------");
 
-        System.out.print("Client Number : ");
-        int clientNumber = Integer.valueOf(scanner.nextLine());
-        
-        System.out.print("Client Firstname : ");
-        String firstname = scanner.nextLine();
+            //Verify if the input given is an Integer
+            String NumberString;
+            do {
+                System.out.print("Client Number : ");
+                NumberString = scanner.nextLine();
 
-        System.out.print("Client Lastname : ");
-        String lastname = scanner.nextLine();
-        
-        // Validation de l'e-mail
-        String email;
-        do {
-            System.out.print("Client Email : ");
-            email = scanner.nextLine();
+                if (!this.isInteger(NumberString)) {
+                    System.out.println("Please enter an Integer");
+                }
+            } while (!this.isInteger(NumberString));
+            int clientNumber = Integer.parseInt(NumberString);
 
-            if (!isValidEmail(email)) {
-                System.out.println("Email adress invalid. Please retry.");
-            }
-        } while (!isValidEmail(email));
-        
+            System.out.print("Client Firstname : ");
+            String firstname = scanner.nextLine();
 
-        System.out.print("Client Adress : ");
-        String address = scanner.nextLine();
+            System.out.print("Client Lastname : ");
+            String lastname = scanner.nextLine();
 
-        //Crï¿½ation de l'objet client avec les informations donnï¿½es
-        Client client = new Client();
-        client.setClientNumber(clientNumber);
-        client.setFirstname(firstname);
-        client.setLastname(lastname);
-        client.setEmail(email);
-        client.setAdress(address);
+            // Validation de l'e-mail
+            String email;
+            do {
+                System.out.print("Client Email : ");
+                email = scanner.nextLine();
 
-        //Appel au service pour gï¿½rer l'insertion en base
-        clientService.create(client);
+                if (!isValidEmail(email)) {
+                    System.out.println("Email adress invalid. Please retry.");
+                }
+            } while (!isValidEmail(email));
 
-        System.out.println("Client successfully created.");
+
+            System.out.print("Client Adress : ");
+            String address = scanner.nextLine();
+
+            //Création de l'objet client avec les informations donnéées
+            Client client = new Client();
+            client.setClientNumber(clientNumber);
+            client.setFirstname(firstname);
+            client.setLastname(lastname);
+            client.setEmail(email);
+            client.setAdress(address);
+
+            //Appel au service pour gérer l'insertion en base
+            clientService.create(client);
+
+            System.out.println("Client successfully created.");
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     //Affiche la liste des clients
     private void getAllClients() {
         System.out.println("Clients List :");
 
-        //Rï¿½cupï¿½ration de la liste des client en base
+        //Récupération de la liste des client en base
         List<Client> clients = clientService.readAll();
 
-        //Vï¿½rifie la prï¿½sence de client en base
+        //Vérifie la présence de client en base
         if (clients.isEmpty()) {
             System.out.println("No Client found");
         } else {
@@ -132,12 +152,20 @@ public class ClientController {
         }
     }
 
-    //Affiche la le client dont l'ID est donnï¿½
+    //Affiche la le client dont l'ID est donné
     private void getClientById(Scanner scanner) {
 
-        System.out.print("Enter Client ID : ");
-        long clientId = scanner.nextLong();
-        scanner.nextLine();
+        //Verify if the input given is an Integer
+        String NumberString;
+        do {
+            System.out.print("Enter Client ID : ");
+            NumberString = scanner.nextLine();
+
+            if (!this.isInteger(NumberString)) {
+                System.out.println("Please enter an Integer");
+            }
+        } while (!this.isInteger(NumberString));
+        long clientId = Integer.parseInt(NumberString);
 
         Client client = clientService.read(clientId);
 
@@ -150,23 +178,39 @@ public class ClientController {
         System.out.println("------------------------");
     }
 
-    //Demande les informations pour la mise ï¿½ jour d'un client
+    //Demande les informations pour la mise à jour d'un client
     private void updateClient(Scanner scanner) {
         System.out.println("Client Update :");
+        
+        //Verify if the input given is an Integer
+        String NumberString;
+        do {
+            System.out.print("Enter Client ID : ");
+            NumberString = scanner.nextLine();
 
-        System.out.print("Enter Client ID : ");
-        long clientId = scanner.nextLong();
-        scanner.nextLine();
+            if (!this.isInteger(NumberString)) {
+                System.out.println("Please enter an Integer");
+            }
+        } while (!this.isInteger(NumberString));
+        long clientId = Integer.parseInt(NumberString);
+        
 
-        //On vï¿½rifie si le client existe
+        //On vérifie si le client existe
         Client client = clientService.read(clientId);
 
         if (client != null) {
             System.out.println("Enter Client new data :");
 
-            System.out.print("New Client Number : ");
-            int newNumber = scanner.nextInt();
-            scanner.nextLine();
+            //Verify if the input given is an Integer
+            do {
+                System.out.print("New Client Number : ");
+                NumberString = scanner.nextLine();
+
+                if (!this.isInteger(NumberString)) {
+                    System.out.println("Please enter an Integer");
+                }
+            } while (!this.isInteger(NumberString));
+            int newNumber = Integer.parseInt(NumberString);
 
                         
             System.out.print("New Client Firstname : ");
@@ -206,13 +250,21 @@ public class ClientController {
         }
     }
 
-    //Supprime le client dont l'ID est donnï¿½
+    //Supprime le client dont l'ID est donné
     private void deleteClient(Scanner scanner) {
         System.out.println("Delete Client :");
 
-        System.out.print("Enter Client ID : ");
-        long clientId = scanner.nextLong();
-        scanner.nextLine();
+        //Verify if the input given is an Integer
+        String NumberString;
+        do {
+            System.out.print("Enter Client ID : ");
+            NumberString = scanner.nextLine();
+
+            if (!ClientController.isInteger(NumberString)) {
+                System.out.println("Please enter an Integer");
+            }
+        } while (!this.isInteger(NumberString));
+        long clientId = Integer.parseInt(NumberString);
 
         clientService.delete(clientId);
     }

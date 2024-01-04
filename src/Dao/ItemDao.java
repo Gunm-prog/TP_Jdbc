@@ -2,8 +2,6 @@ package Dao;
 
 import Entity.Item;
 import Entity.ItemStatus;
-import Service.ConnexionService;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class ItemDao {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }
@@ -61,7 +59,7 @@ public class ItemDao {
                     item = mapResultSetToItem(resultSet);
                 }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return item;
     }

@@ -37,9 +37,7 @@ public class ItemController {
             System.out.println("------------------------");
             System.out.println();
 
-            System.out.println("Selection: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = makeControlledIntInput(scanner, "Selection: " );
 
             //get user's choice using switch case method
             switch (choice) {

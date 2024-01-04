@@ -38,10 +38,7 @@ public class UserController {
             System.out.println();
 
             int choice = makeControlledIntInput(scanner, "Selection: " );
-        /*    System.out.println("Selection: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-*/
+
             //get user's choice using switch case method
             switch (choice) {
                 case 1:

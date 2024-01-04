@@ -16,4 +16,5 @@ public interface ISupplierService {
 
     void deleteSupplier(Long id);
 
+    boolean isSupplierNumberExists(int supplierNumber);
 }

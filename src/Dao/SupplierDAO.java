@@ -108,6 +108,26 @@ public class SupplierDAO {
          }
     }
 
+    public boolean isSupplierNumberExists(int supplierNumber) {
+        try {
+            String query = "SELECT COUNT(*) FROM Suppliers WHERE number=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, supplierNumber);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int count = resultSet.getInt(1);
+                        return count > 0;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+
     //  mapper le résultat de la requête à un objet Supplier
     private Supplier mapResultSetToSupplier(ResultSet resultSet) throws SQLException {
         Supplier supplier = new Supplier();

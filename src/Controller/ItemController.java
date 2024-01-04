@@ -67,9 +67,8 @@ public class ItemController {
         /*System.out.println("Item Number: ");
         int number = scanner.nextInt();*/
 
-        String status = makeControlledStringInput(scanner, "Item Status: ", 255);
-        /*System.out.println("Item Status: ");
-        String status = getStatusChoice( scanner );*/
+        System.out.println("Item Status: ");
+        String status = getStatusChoice( scanner );
 
         String name = makeControlledStringInput(scanner, "Item Name: ", 255);
         /*System.out.println("Item's name: ");
@@ -212,7 +211,19 @@ public class ItemController {
     }
 
     private String getStatusChoice(Scanner scanner){
-        int indexStatus = makeControlledIntInput(scanner, "Item status: [0] sold or [1] for sell");
+        boolean isOk;
+        int indexStatus;
+        do{
+            isOk = false;
+            indexStatus = makeControlledIntInput(scanner, "Item status: [0] sold or [1] for sell");
+            if( indexStatus == 0 || indexStatus == 1 ){
+                isOk = true;
+            } else {
+                System.out.println( "Invalid input. \n Choice only [0] or [1] options" );
+            }
+        } while( !isOk );
+
+       // int indexStatus = makeControlledIntInput(scanner, "Item status: [0] sold or [1] for sell");
         /*System.out.println("Item status: [0] sold or [1] for sell ");
         int indexStatus = scanner.nextInt();
         scanner.nextLine();*/

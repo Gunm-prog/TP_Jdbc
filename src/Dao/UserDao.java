@@ -94,7 +94,7 @@ public class UserDao {
             preparedStatement.executeUpdate();
 
         }catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class UserDao {
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
